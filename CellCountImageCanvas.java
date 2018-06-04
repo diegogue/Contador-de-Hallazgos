@@ -3,6 +3,7 @@ package ecci.GoF;
 import ij.ImagePlus;
 import ij.gui.ImageCanvas;
 import ij.gui.ImageWindow;
+import ij.gui.Wand;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -15,28 +16,71 @@ import java.util.Observable;
 class CellCountImageCanvas extends Observable {
     private ArrayList<ArrayList<Point>> points;
     private ArrayList<Color> colors;
+    private ArrayList<ArrayList<Wand>> wands;
     //private CustomCanvas imageCanvas;
     private ImageWindow imageWindow;
-    private int selectedPointArray;
+    private ArrayList<Point> selectedPointArray;
+    private int colorIndex;
 
     /**
      * Constructor de CellCountImageCanvas
      * @param imp imagen a mostrar
      */
     CellCountImageCanvas(ImagePlus imp) {
-        CustomCanvas imageCanvas = new CustomCanvas(imp);
+        initializePoints();
+        initializeColors();
+        initializeWands();
+        setImage(imp);
+    }
+
+    /**
+     * Constructor de CellCountImageCanvas
+     */
+    CellCountImageCanvas() {
+        initializePoints();
+        initializeColors();
+        initializeWands();
+    }
+
+    /**
+     * Metodo auxiliar para inicializar puntos
+     */
+    private void initializePoints() {
         points = new ArrayList<>();
-        points.add(new ArrayList<>());
-        points.add(new ArrayList<>());
-        points.add(new ArrayList<>());
-        points.add(new ArrayList<>());
-        points.add(new ArrayList<>());
+        for (int i = 0; i < 5; ++i) {
+            points.add(new ArrayList<>());
+        }
+        selectedPointArray = points.get(0);
+    }
+
+    /**
+     * Metodo auxiliar para inicializar colores
+     */
+    private void initializeColors() {
         colors = new ArrayList<>();
         colors.add(Color.MAGENTA);
-        colors.add(Color.CYAN);
-        colors.add(Color.RED);
-        colors.add(Color.BLUE);
         colors.add(Color.GREEN);
+        colors.add(Color.ORANGE);
+        colors.add(Color.PINK);
+        colors.add(Color.RED);
+    }
+
+    private void initializeWands() {
+        wands = new ArrayList<>();
+        for (int i = 0; i < 5; ++i) {
+            wands.add(new ArrayList<>());
+        }
+    }
+
+    /**
+     * Agrega imaen a la ventana
+     * @param imp imagen para mostrar
+     */
+    void setImage(ImagePlus imp) {
+        if (imageWindow != null) {
+            imageWindow.close();
+        }
+        CustomCanvas imageCanvas = new CustomCanvas(imp);
         imageWindow = new ImageWindow(imp, imageCanvas);
     }
 
@@ -45,7 +89,7 @@ class CellCountImageCanvas extends Observable {
      * @return la cantidad de puntos guardados
      */
     int getPointCount() {
-        return points.get(selectedPointArray).size();
+        return selectedPointArray.size();
     }
 
     /**
@@ -53,14 +97,25 @@ class CellCountImageCanvas extends Observable {
      * @param n indice del tipo
      */
     void selectType(int n) {
-        selectedPointArray = n;
+        selectedPointArray = points.get(n);
+        colorIndex = n;
     }
 
     /**
-     *  Cierra la ventana
+     * Cambia el color del tipo actual
+     * @param color color elegido
      */
-    void close() {
-        imageWindow.close();
+    void setColor(Color color) {
+        colors.set(colorIndex, color);
+    }
+
+    /**
+     * Fuerza una actualizacion del canvas
+     */
+    void repaint() {
+        if (imageWindow != null) {
+            imageWindow.getCanvas().repaint();
+        }
     }
 
     /**
@@ -84,10 +139,15 @@ class CellCountImageCanvas extends Observable {
             Integer i = 0;
             for (ArrayList<Point> pointArray : points) {
                 g.setColor(colors.get(i));
+                ArrayList<Wand> wandArray = wands.get(i);
+                Integer j = 0;
                 for (Point point : pointArray) {
                     g.fillOval(point.x  - 2, point.y - 2, 4, 4);
+                    Wand wand = wandArray.get(j);
+                    g.drawPolygon(wand.xpoints, wand.ypoints, wand.npoints);
                     char[] label = {(char)((int)'1' + i)};
                     g.drawChars(label, 0, 1, point.x - 2, point.y - 2);
+                    ++j;
                 }
                 ++i;
             }
@@ -105,15 +165,18 @@ class CellCountImageCanvas extends Observable {
             int button = event.getButton();
             if (button == MouseEvent.BUTTON1) {
                 Point mousePoint = event.getPoint();
-                points.get(selectedPointArray).add(mousePoint);
-                System.out.println(mousePoint);
+                selectedPointArray.add(mousePoint);
+                //System.out.println(mousePoint);
+                Wand newWand = new Wand(imageWindow.getImagePlus().getProcessor());
+                newWand.autoOutline(mousePoint.x, mousePoint.y);
+                wands.get(colorIndex).add(newWand);
             } else if (button == MouseEvent.BUTTON3) {
-                ArrayList<Point> pointArray = points.get(selectedPointArray);
-                if (pointArray.size() > 0) {
-                    pointArray.remove(pointArray.size() - 1);
+                int arraySize  = selectedPointArray.size();
+                if (arraySize > 0) {
+                    selectedPointArray.remove(arraySize - 1);
                 }
+                repaint();
             }
-            repaint();
             setChanged();
             notifyObservers();
         }
