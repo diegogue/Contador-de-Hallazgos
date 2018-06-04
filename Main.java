@@ -5,7 +5,7 @@ package ecci.GoF;
  * de celulas
  *
  * @autor   Group of Five
- * @version 0.0.4
+ * @version 0.0.5
  * @since   2018-05
  */
 public class Main {
