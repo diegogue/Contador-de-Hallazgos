@@ -1,12 +1,10 @@
 package ecci.GoF;
-kdjdkjdjdkjpvdkjkjdvkjñd
 
 import ij.ImagePlus;
 import ij.io.Opener;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Observable;
@@ -35,6 +33,8 @@ public class CellCountGUI implements Observer {
     private JButton saveButton;
     private JButton queryButton;
     private JPanel databasePane;
+    private JButton cambiarColorButton;
+
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
     private ImagePlus image;
@@ -50,13 +50,6 @@ public class CellCountGUI implements Observer {
             image = open.openImage("");
             initializeImage();
         });
-        box0.addActionListener(e -> selectLabel(0));
-        box1.addActionListener(e -> selectLabel(1));
-        box2.addActionListener(e -> selectLabel(2));
-        box3.addActionListener(e -> selectLabel(3));
-        box4.addActionListener(e -> selectLabel(4));
-        selectedLabel = type0;
-        selectedBox = box0;
         nameChangeField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -66,6 +59,14 @@ public class CellCountGUI implements Observer {
                 }
             }
         });
+        cambiarColorButton.addActionListener(e -> {
+            Color newColor = JColorChooser.showDialog(null, "", Color.WHITE);
+            if (newColor != null) {
+                imageCanvas.setColor(newColor);
+                selectedBox.setBackground(newColor);
+                imageCanvas.repaint();
+            }
+        });
         queryButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(null,"No implementado",
                     "No implementado", JOptionPane.INFORMATION_MESSAGE);
@@ -73,8 +74,16 @@ public class CellCountGUI implements Observer {
         saveButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(null,"No implementado",
                     "No implementado", JOptionPane.INFORMATION_MESSAGE);
-
         });
+        box0.addActionListener(e -> selectLabel(0));
+        box1.addActionListener(e -> selectLabel(1));
+        box2.addActionListener(e -> selectLabel(2));
+        box3.addActionListener(e -> selectLabel(3));
+        box4.addActionListener(e -> selectLabel(4));
+        selectedLabel = type0;
+        selectedBox = box0;
+        imageCanvas = new CellCountImageCanvas();
+        imageCanvas.addObserver(this);
     }
 
     /**
@@ -98,15 +107,10 @@ public class CellCountGUI implements Observer {
         type2.setText("0");
         type3.setText("0");
         type4.setText("0");
-        if (imageCanvas != null) {
-            imageCanvas.close();
-            imageCanvas = null;
-        }
         if (image != null) {
-            imageCanvas = new CellCountImageCanvas(image);
-            imageCanvas.addObserver(this);
+            imageCanvas.setImage(image);
         }
-        box0.doClick();
+        //box0.doClick();
     }
 
     /**
@@ -136,13 +140,11 @@ public class CellCountGUI implements Observer {
                 selectedBox = box4;
                 break;
         }
-        if(imageCanvas != null) {
-            imageCanvas.selectType(n);
-        }
+        imageCanvas.selectType(n);
     }
 
     /**
-     * Metodo que es parte del patron de observer.
+     * Methdo que es parte del patron de observer.
      * Es llamado cuando se actualiza los objectos observados.
      * Actualiza el contador de puntos.
      * @param o   Objeto observado
