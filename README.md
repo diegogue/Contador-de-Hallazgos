@@ -1,1 +1,1 @@
-"# Contador-de-Hallazgos" 
+# Contador de Hallazgos

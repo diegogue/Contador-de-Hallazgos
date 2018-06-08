@@ -1,6 +1,7 @@
 package ecci.GoF;
 
 import ij.ImagePlus;
+import ij.gui.ImageWindow;
 import ij.io.Opener;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import java.util.Observer;
 /**
  * Interfaz principal del programa contador de celulas.
  */
-public class CellCountGUI implements Observer {
+public class CellCountGUI {
     private JPanel mainPanel;
     private JPanel counterPanel;
     private JPanel actionsPanel;
@@ -37,8 +38,8 @@ public class CellCountGUI implements Observer {
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
-    private ImagePlus image;
     private CellCountImageCanvas imageCanvas;
+    private CellCountImageData data;
 
     /**
      * Constructor de CellCountGUI.
@@ -47,8 +48,8 @@ public class CellCountGUI implements Observer {
     private CellCountGUI() {
         openButton.addActionListener(e -> {
             Opener open = new Opener();
-            image = open.openImage("");
-            initializeImage();
+            ImagePlus image = open.openImage("");
+            initializeImage(image);
         });
         nameChangeField.addKeyListener(new KeyAdapter() {
             @Override
@@ -62,9 +63,11 @@ public class CellCountGUI implements Observer {
         cambiarColorButton.addActionListener(e -> {
             Color newColor = JColorChooser.showDialog(null, "", Color.WHITE);
             if (newColor != null) {
-                imageCanvas.setColor(newColor);
+                data.setColor(newColor);
                 selectedBox.setBackground(newColor);
-                imageCanvas.repaint();
+                if (imageCanvas != null) {
+                    imageCanvas.repaint();
+                }
             }
         });
         queryButton.addActionListener(e -> {
@@ -82,8 +85,8 @@ public class CellCountGUI implements Observer {
         box4.addActionListener(e -> selectLabel(4));
         selectedLabel = type0;
         selectedBox = box0;
-        imageCanvas = new CellCountImageCanvas();
-        imageCanvas.addObserver(this);
+        data = new CellCountImageData();
+        imageCanvas = null;
     }
 
     /**
@@ -101,14 +104,15 @@ public class CellCountGUI implements Observer {
     /**
      * Inicializa el contador y abre la imagen
      */
-    private void initializeImage() {
+    private void initializeImage(ImagePlus image) {
         type0.setText("0");
         type1.setText("0");
         type2.setText("0");
         type3.setText("0");
         type4.setText("0");
         if (image != null) {
-            imageCanvas.setImage(image);
+            imageCanvas = new CellCountImageCanvas(image, data);
+            new ImageWindow(image, imageCanvas);
         }
         //box0.doClick();
     }
@@ -140,19 +144,7 @@ public class CellCountGUI implements Observer {
                 selectedBox = box4;
                 break;
         }
-        imageCanvas.selectType(n);
+        data.setType(n);
     }
 
-    /**
-     * Methdo que es parte del patron de observer.
-     * Es llamado cuando se actualiza los objectos observados.
-     * Actualiza el contador de puntos.
-     * @param o   Objeto observado
-     * @param arg Argumentos enviados por el objecto observado
-     */
-    @Override
-    public void update(Observable o, Object arg) {
-        Integer count = imageCanvas.getPointCount();
-        selectedLabel.setText(count.toString());
-    }
 }
