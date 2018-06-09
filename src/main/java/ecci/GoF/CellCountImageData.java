@@ -12,6 +12,10 @@ public class CellCountImageData {
     private int typeIndex;
 
     public CellCountImageData() {
+        init();
+    }
+
+    public void init() {
         initializePoints();
         initializeColors();
         initializeWands();

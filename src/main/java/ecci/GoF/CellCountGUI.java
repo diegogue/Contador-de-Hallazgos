@@ -50,6 +50,7 @@ public class CellCountGUI {
             Opener open = new Opener();
             ImagePlus image = open.openImage("");
             initializeImage(image);
+            data.init();
         });
         nameChangeField.addKeyListener(new KeyAdapter() {
             @Override
@@ -86,7 +87,6 @@ public class CellCountGUI {
         selectedLabel = type0;
         selectedBox = box0;
         data = new CellCountImageData();
-        imageCanvas = null;
     }
 
     /**
@@ -112,9 +112,9 @@ public class CellCountGUI {
         type4.setText("0");
         if (image != null) {
             imageCanvas = new CellCountImageCanvas(image, data);
+            imageCanvas.addObserver(this);
             new ImageWindow(image, imageCanvas);
         }
-        //box0.doClick();
     }
 
     /**
@@ -147,4 +147,8 @@ public class CellCountGUI {
         data.setType(n);
     }
 
+    public void update() {
+        Integer count = data.getPointCount();
+        selectedLabel.setText(count.toString());
+    }
 }

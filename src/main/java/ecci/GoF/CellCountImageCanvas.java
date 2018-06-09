@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class CellCountImageCanvas extends ImageCanvas {
     CellCountImageData data;
+    CellCountGUI observer;
 
     /**
      * Constructor de CustomCanvas
@@ -27,6 +28,16 @@ public class CellCountImageCanvas extends ImageCanvas {
 
     CellCountImageCanvas(CellCountImageData data) {
         this(new ImagePlus(), data);
+    }
+
+    public void addObserver(CellCountGUI observer) {
+        this.observer = observer;
+    }
+
+    private void notifyObserver() {
+        if (observer != null) {
+            observer.update();
+        }
     }
 
     /**
@@ -82,5 +93,6 @@ public class CellCountImageCanvas extends ImageCanvas {
             }
             repaint();
         }
+        notifyObserver();
     }
 }
