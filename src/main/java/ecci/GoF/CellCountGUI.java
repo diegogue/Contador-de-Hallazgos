@@ -51,6 +51,7 @@ public class CellCountGUI {
             ImagePlus image = open.openImage("");
             initializeImage(image);
             data.init();
+            data.setImage(image);
         });
         nameChangeField.addKeyListener(new KeyAdapter() {
             @Override

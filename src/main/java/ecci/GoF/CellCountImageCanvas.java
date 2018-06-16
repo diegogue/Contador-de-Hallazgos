@@ -3,7 +3,6 @@ package ecci.GoF;
 import ij.ImagePlus;
 import ij.gui.ImageCanvas;
 import ij.gui.Wand;
-import ij.process.ByteProcessor;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -16,8 +15,6 @@ import java.util.List;
 public class CellCountImageCanvas extends ImageCanvas {
     private CellCountImageData data;
     private CellCountGUI observer;
-    // TODO: delet dis
-    private BlobDetector blob;
 
     /**
      * Constructor de CustomCanvas
@@ -64,6 +61,7 @@ public class CellCountImageCanvas extends ImageCanvas {
             }
             ++i;
         }
+        BlobDetector blob = data.getBlob();
         if (blob != null) {
             for (int j = 0; j < blob.npoints; ++j) {
                 g.fillOval(blob.xpoints[j] - 2, blob.ypoints[j] - 2, 4, 4);
@@ -93,9 +91,7 @@ public class CellCountImageCanvas extends ImageCanvas {
             Wand newWand = new Wand(imp.getProcessor());
             newWand.autoOutline(mousePoint.x, mousePoint.y);
             data.getSelectedWands().add(newWand);
-            blob = new BlobDetector(10);
-            blob.setImage((ByteProcessor) imp.getProcessor().convertToByte(true));
-            blob.computeBlob(mousePoint);
+            data.addBlob(mousePoint);
         } else if (button == MouseEvent.BUTTON3) {
             int arraySize = points.size();
             if (arraySize > 0) {
