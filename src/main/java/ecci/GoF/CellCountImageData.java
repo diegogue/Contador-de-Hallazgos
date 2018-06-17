@@ -5,7 +5,6 @@ import ij.gui.Wand;
 import ij.plugin.ContrastEnhancer;
 import ij.plugin.filter.GaussianBlur;
 import ij.process.ByteProcessor;
-import ij.process.ImageProcessor;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -68,8 +67,9 @@ public class CellCountImageData {
         blur.blurGaussian(byteImage, 10, 10, 2);
         ContrastEnhancer equalizer = new ContrastEnhancer();
         equalizer.equalize(byteImage);
-        blob = new BlobDetector(8);
-        blob.setImage((ByteProcessor) imp.getProcessor().convertToByte(true));
+        blob = new BlobDetector(4);
+        blob.setImage(byteImage);
+        //(new ImagePlus("8-bit wonder", byteImage)).show();
     }
 
     public int getPointCount() {
