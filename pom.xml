@@ -32,7 +32,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ecci.GoF.Main</mainClass>
+                            <mainClass>ecci.GoF.InicioGUI</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
