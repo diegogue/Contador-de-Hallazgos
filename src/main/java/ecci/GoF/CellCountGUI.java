@@ -45,7 +45,7 @@ public class CellCountGUI {
      * Constructor de CellCountGUI.
      * Inicializa los atributos y agrega los listeners correspondientes
      */
-    private CellCountGUI() {
+    public CellCountGUI() {
         openButton.addActionListener(e -> {
             Opener open = new Opener();
             ImagePlus image = open.openImage("");
@@ -95,7 +95,7 @@ public class CellCountGUI {
      * @param args no utilizado
      */
     public static void main(String[] args) {
-        JFrame frame = new JFrame("CellCountGUI");
+        JFrame frame = new JFrame("CHIM");
         frame.setContentPane(new CellCountGUI().mainPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
