@@ -64,11 +64,12 @@ public class CellCountImageData {
     public void setImage(ImagePlus imp) {
         ByteProcessor byteImage = (ByteProcessor) imp.getProcessor().convertToByte(true);
         GaussianBlur blur = new GaussianBlur();
-        blur.blurGaussian(byteImage, 10, 10, 2);
+        blur.blurGaussian(byteImage, 32, 32, 8);
         ContrastEnhancer equalizer = new ContrastEnhancer();
         equalizer.equalize(byteImage);
-        blob = new BlobDetector(4);
+        blob = new BlobDetector(100);
         blob.setImage(byteImage);
+        /* Debug image */
         //(new ImagePlus("8-bit wonder", byteImage)).show();
     }
 

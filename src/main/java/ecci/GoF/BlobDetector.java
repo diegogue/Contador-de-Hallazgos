@@ -10,6 +10,7 @@ public class BlobDetector {
     private Set<Point> pointsSet;
     private Set<Point> boundarySet;
     private int tolerance;
+    private byte backgroundReference;
     private int width;
     private int height;
     private byte[] image;
@@ -26,6 +27,10 @@ public class BlobDetector {
 
     public void setTolerance(int tolerance) {
         this.tolerance = tolerance;
+    }
+
+    public void setBackgroundReference(Point p) {
+        backgroundReference = image[p.x + p.y * width];
     }
 
     public void setImage(ByteProcessor processor) {
@@ -48,10 +53,10 @@ public class BlobDetector {
             Point north = new Point(base.x, base.y - 1);
             Point east  = new Point(base.x + 1, base.y);
             Point south = new Point(base.x, base.y + 1);
-            addPoint(base, west);
-            addPoint(base, north);
-            addPoint(base, east);
-            addPoint(base, south);
+            addPoint(west);
+            addPoint(north);
+            addPoint(east);
+            addPoint(south);
         }
         System.out.println(pointsSet);
         System.out.println(pointsQueue);
@@ -59,7 +64,7 @@ public class BlobDetector {
         setPoints();
     }
 
-    private void addPoint(Point base, Point direction) {
+    private void addPoint(Point direction) {
         if (direction.x < 0 || direction.x >= width) {
             boundarySet.add(direction);
             return;
@@ -69,9 +74,10 @@ public class BlobDetector {
             return;
         }
         if (pointsSet.contains(direction)) return;
-        byte pixelValueBase = image[base.x + base.y*width];
+        //byte pixelValueBase = image[base.x + base.y*width];
         byte pixelValueDire = image[direction.x + direction.y*width];
-        if (Math.abs(pixelValueBase - pixelValueDire) > tolerance) {
+        /* Do not match background */
+        if (Math.abs(pixelValueDire - backgroundReference ) < tolerance) {
             boundarySet.add(direction);
             return;
         }
