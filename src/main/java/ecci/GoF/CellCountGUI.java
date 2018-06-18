@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Interfaz principal del programa contador de celulas.
