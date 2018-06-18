@@ -85,8 +85,8 @@ public class Login extends Application {
         final PasswordField passwordTxt = new PasswordField();
         final Label message = new Label("   ");
 
-        Image okImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/images/ok2.png"));
-        Image microscopioImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/images/mc.jpg"));
+        Image okImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/src/images/ok2.png"));
+        Image microscopioImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/src/images/mc.jpg"));
         Button enter = new Button();
         enter.setGraphic(new ImageView(okImage));
         enter.setOnMouseClicked(new EventHandler<MouseEvent>() {
