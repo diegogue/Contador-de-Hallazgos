@@ -58,9 +58,6 @@ public class BlobDetector {
             addPoint(east);
             addPoint(south);
         }
-        System.out.println(pointsSet);
-        System.out.println(pointsQueue);
-        System.out.println(boundarySet);
         setPoints();
     }
 

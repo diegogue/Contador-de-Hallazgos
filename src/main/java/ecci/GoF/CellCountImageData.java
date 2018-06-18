@@ -3,6 +3,7 @@ package ecci.GoF;
 import ij.ImagePlus;
 import ij.gui.Wand;
 import ij.plugin.ContrastEnhancer;
+import ij.plugin.filter.BackgroundSubtracter;
 import ij.plugin.filter.GaussianBlur;
 import ij.process.ByteProcessor;
 
@@ -63,14 +64,20 @@ public class CellCountImageData {
 
     public void setImage(ImagePlus imp) {
         ByteProcessor byteImage = (ByteProcessor) imp.getProcessor().convertToByte(true);
-        GaussianBlur blur = new GaussianBlur();
-        blur.blurGaussian(byteImage, 32, 32, 8);
+
+        BackgroundSubtracter subtracter = new BackgroundSubtracter();
+        subtracter.run(byteImage);
+
         ContrastEnhancer equalizer = new ContrastEnhancer();
         equalizer.equalize(byteImage);
-        blob = new BlobDetector(100);
+
+        GaussianBlur blur = new GaussianBlur();
+        blur.blurGaussian(byteImage, 32, 32, 8);
+
+        blob = new BlobDetector(90);
         blob.setImage(byteImage);
         /* Debug image */
-        //(new ImagePlus("8-bit wonder", byteImage)).show();
+        (new ImagePlus("8-bit wonder", byteImage)).show();
     }
 
     public int getPointCount() {
