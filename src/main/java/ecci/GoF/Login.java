@@ -40,6 +40,8 @@ public class Login extends Application {
     public void start(Stage stage) throws FileNotFoundException{
 
         Label spaces = new Label("   ");
+        Label tabs = new Label("\t\t\t\t\t");
+        tabs.setAlignment(Pos.BASELINE_LEFT);
 
         VBox vb = new VBox();
         vb.setPadding(new Insets(360,20,0,40));
@@ -57,21 +59,21 @@ public class Login extends Application {
         hbAutMessage.setSpacing(10);
         hbAutMessage.setAlignment(Pos.BASELINE_LEFT);
 
-        HBox hbEnterBtn = new HBox();
-        hbEnterBtn.setSpacing(10);
-        hbEnterBtn.setAlignment(Pos.BASELINE_LEFT);
+        HBox hbSaltarLogin = new HBox();
+        hbSaltarLogin.setSpacing(10);
+        hbSaltarLogin.setAlignment(Pos.BASELINE_LEFT);
 
         Label username = new Label("Usuario\t\t");
         username.setTextFill(Paint.valueOf("black"));
-        username.setFont(Font.font(null, FontWeight.EXTRA_BOLD, 14));
+        username.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD, 14));
 
         Label password = new Label("Contraseña\t");
         password.setTextFill(Paint.valueOf("black"));
-        password.setFont(Font.font(null, FontWeight.EXTRA_BOLD, 14));
+        password.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD, 14));
 
         TextField userTxt = new TextField();
 
-        Hyperlink skipLogin = new Hyperlink("saltar autenticación");
+        Hyperlink skipLogin = new Hyperlink("saltar paso");
         skipLogin.setAlignment(Pos.BASELINE_RIGHT);
         skipLogin.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -81,7 +83,7 @@ public class Login extends Application {
         });
 
         final PasswordField passwordTxt = new PasswordField();
-        final Label message = new Label("");
+        final Label message = new Label("   ");
 
         Image okImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/images/ok2.png"));
         Image microscopioImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/images/mc.jpg"));
@@ -120,17 +122,18 @@ public class Login extends Application {
         hbUser.getChildren().addAll(username, userTxt);
         hbPassword.getChildren().addAll(password, passwordTxt, spaces,enter);
         hbAutMessage.getChildren().addAll(message);
-        hbEnterBtn.getChildren().addAll(skipLogin);
+        hbSaltarLogin.getChildren().addAll(tabs, skipLogin);
 
         vb.setBackground(background);
         vb.setAlignment(Pos.BASELINE_CENTER);
 
-        vb.getChildren().addAll(hbUser, hbPassword, hbAutMessage, hbEnterBtn);
+        vb.getChildren().addAll(hbUser, hbPassword, hbAutMessage, hbSaltarLogin);
 
 
         Group root = new Group(vb);
 
-        Scene scene = new Scene(root, 400, 500);
+        Scene scene = new Scene(root, 440, 500);
+        scene.setFill(Paint.valueOf("white"));
 
 
         stage.setTitle("Login");
