@@ -102,6 +102,7 @@ public class CellCountImageCanvas extends ImageCanvas {
             */
             data.getBlob().setBackgroundReference(event.getPoint());
         }
+        repaint();
         notifyObserver();
     }
 }

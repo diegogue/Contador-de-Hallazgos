@@ -32,12 +32,13 @@ public class CellCountGUI {
     private JPanel databasePane;
     private JButton cambiarColorButton;
     private JPanel testPane;
-    private JScrollPane imagePane;
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
     private CellCountImageCanvas imageCanvas;
     private CellCountImageData data;
+
+    private static JFrame frame;
 
     /**
      * Constructor de CellCountGUI.
@@ -93,7 +94,7 @@ public class CellCountGUI {
      * @param args no utilizado
      */
     public static void main(String[] args) {
-        JFrame frame = new JFrame("CHIM");
+        frame = new JFrame("CHIM");
         frame.setContentPane(new CellCountGUI().mainPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
@@ -113,7 +114,15 @@ public class CellCountGUI {
             imageCanvas = new CellCountImageCanvas(image, data);
             imageCanvas.addObserver(this);
             //new ImageWindow(image, imageCanvas);
-            testPane.setSize(200, 200);
+            int imageWidth = image.getProcessor().getWidth();
+            int imageHeight = image.getProcessor().getHeight();
+            /* Numero magico, valor sensible */
+            int newHeight = imageHeight + 80;
+            if (newHeight < 500) {
+                newHeight = 500;
+            }
+            frame.setSize(imageWidth + 200, newHeight);
+            testPane.removeAll();
             testPane.add(imageCanvas);
         }
     }
@@ -152,4 +161,5 @@ public class CellCountGUI {
         Integer count = data.getPointCount();
         selectedLabel.setText(count.toString());
     }
+
 }

@@ -62,7 +62,8 @@ public class CellCountImageData {
         blob.computeBlob(startPoint);
     }
 
-    public void setImage(ImagePlus imp) {
+    public void setImage(ImagePlus image) {
+        ImagePlus imp = image.duplicate();
         ByteProcessor byteImage = (ByteProcessor) imp.getProcessor().convertToByte(true);
 
         BackgroundSubtracter subtracter = new BackgroundSubtracter();
@@ -77,7 +78,7 @@ public class CellCountImageData {
         blob = new BlobDetector(90);
         blob.setImage(byteImage);
         /* Debug image */
-        (new ImagePlus("8-bit wonder", byteImage)).show();
+        //(new ImagePlus("8-bit wonder", byteImage)).show();
     }
 
     public int getPointCount() {
