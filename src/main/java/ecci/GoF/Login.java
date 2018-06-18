@@ -26,8 +26,10 @@ import sun.font.FontFamily;
 
 import javax.swing.text.StyledEditorKit;
 import java.awt.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class Login extends Application {
@@ -85,8 +87,26 @@ public class Login extends Application {
         final PasswordField passwordTxt = new PasswordField();
         final Label message = new Label("   ");
 
-        Image okImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/src/images/ok2.png"));
-        Image microscopioImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/src/images/mc.jpg"));
+        File path= new File("ok2.png");
+
+        String absolutePath = path.getAbsolutePath();
+        int lastSlash = absolutePath.lastIndexOf("/");
+        absolutePath = absolutePath.substring(0, lastSlash);
+        absolutePath =  absolutePath + "/src/images/" + path.getPath();
+        System.out.println(absolutePath);
+
+        Image okImage = new Image(new FileInputStream(absolutePath));
+        //Image okImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/src/images/ok2.png"));
+
+        File path1 = new File("mc.jpg");
+        String absolutePath1 = path1.getAbsolutePath();
+        lastSlash = absolutePath1.lastIndexOf("/");
+        absolutePath1 = absolutePath1.substring(0, lastSlash);
+        absolutePath1 =  absolutePath1 + "/src/images/" + path1.getPath();
+        System.out.println(absolutePath1);
+
+        Image microscopioImage = new Image(new FileInputStream(absolutePath1));
+
         Button enter = new Button();
         enter.setGraphic(new ImageView(okImage));
         enter.setOnMouseClicked(new EventHandler<MouseEvent>() {
