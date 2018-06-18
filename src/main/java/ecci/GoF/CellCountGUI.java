@@ -1,13 +1,11 @@
 package ecci.GoF;
 
 import ij.ImagePlus;
-import ij.gui.ImageWindow;
 import ij.io.Opener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 /**
  * Interfaz principal del programa contador de celulas.
@@ -33,6 +31,8 @@ public class CellCountGUI {
     private JButton queryButton;
     private JPanel databasePane;
     private JButton cambiarColorButton;
+    private JPanel testPane;
+    private JScrollPane imagePane;
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
@@ -112,7 +112,9 @@ public class CellCountGUI {
         if (image != null) {
             imageCanvas = new CellCountImageCanvas(image, data);
             imageCanvas.addObserver(this);
-            new ImageWindow(image, imageCanvas);
+            //new ImageWindow(image, imageCanvas);
+            testPane.setSize(200, 200);
+            testPane.add(imageCanvas);
         }
     }
 
