@@ -1,10 +1,11 @@
 package ecci.GoF;
 
 import javafx.application.Application;
-import javafx.event.*;
-import javafx.event.Event;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -22,10 +22,6 @@ import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.event.EventHandler;
-import sun.font.FontFamily;
-
-import javax.swing.text.StyledEditorKit;
-import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,6 +36,21 @@ public class Login extends Application {
 
     @Override
     public void start(Stage stage) throws FileNotFoundException{
+/*
+        try {
+
+            Parent root = FXMLLoader.load(Login.class.getResource("Login.fxml"));
+
+            Scene scene = new Scene(root);
+
+            stage.setTitle("FXML Welcome");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+*/
 
         Label spaces = new Label("   ");
         Label tabs = new Label("\t\t\t\t\t");
@@ -80,7 +91,7 @@ public class Login extends Application {
         skipLogin.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                CellCountGUI.main(null);
+                InicioGUI.main(null);
             }
         });
 
@@ -92,18 +103,15 @@ public class Login extends Application {
         String absolutePath = path.getAbsolutePath();
         int lastSlash = absolutePath.lastIndexOf("/");
         absolutePath = absolutePath.substring(0, lastSlash);
-        absolutePath =  absolutePath + "/src/images/" + path.getPath();
-        System.out.println(absolutePath);
+        absolutePath =  absolutePath + "/src/gui/images/" + path.getPath();
 
         Image okImage = new Image(new FileInputStream(absolutePath));
-        //Image okImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/src/images/ok2.png"));
 
         File path1 = new File("mc.jpg");
         String absolutePath1 = path1.getAbsolutePath();
         lastSlash = absolutePath1.lastIndexOf("/");
         absolutePath1 = absolutePath1.substring(0, lastSlash);
-        absolutePath1 =  absolutePath1 + "/src/images/" + path1.getPath();
-        System.out.println(absolutePath1);
+        absolutePath1 =  absolutePath1 + "/src/gui/images/" + path1.getPath();
 
         Image microscopioImage = new Image(new FileInputStream(absolutePath1));
 
@@ -113,19 +121,19 @@ public class Login extends Application {
             @Override
             public void handle(MouseEvent event) {
                 if(passwordTxt.getText().equals("") && userTxt.getText().equals("")){
-                    message.setText("\t\t\t\tdebe ingresar usuario y contraseña!");
+                    message.setText("\t\t\t\t\tdebe ingresar usuario y contraseña!");
                     message.setTextFill(Paint.valueOf("blue"));
                 } else if(userTxt.getText().equals("")){
-                    message.setText("\t\t\t\tdebe ingresar usuario!");
+                    message.setText("\t\t\t\t\tdebe ingresar usuario!");
                     message.setTextFill(Paint.valueOf("blue"));
                 } else if (passwordTxt.getText().equals("")) {
-                    message.setText("\t\t\t\tdebe ingresar contraseña!");
+                    message.setText("\t\t\t\t\tdebe ingresar contraseña!");
                     message.setTextFill(Paint.valueOf("blue"));
                 }else if (!passwordTxt.getText().equals("b32135") && !userTxt.getText().equals("jct")) {
-                    message.setText("\t\t\t\tusuario y/o contraseña incorrecta!");
+                    message.setText("\t\t\t\t\tusuario y/o contraseña incorrecta!");
                     message.setTextFill(Paint.valueOf("red"));
                 } else {
-                    message.setText("\t\t\t\tcontraseña correcta!");
+                    message.setText("\t\t\t\t\tcontraseña correcta!");
                     message.setTextFill(Paint.valueOf("green"));
                     InicioGUI.main(null);
                 }
