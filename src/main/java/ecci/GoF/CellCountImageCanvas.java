@@ -33,6 +33,10 @@ public class CellCountImageCanvas extends ImageCanvas {
         this.observer = observer;
     }
 
+    public CellCountGUI getObserver() {
+        return this.observer;
+    }
+
     private void notifyObserver() {
         if (observer != null) {
             observer.update();

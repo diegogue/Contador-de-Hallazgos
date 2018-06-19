@@ -13,7 +13,6 @@ import java.awt.event.*;
 public class CellCountGUI {
     private JPanel mainPanel;
     private JPanel counterPanel;
-    private JPanel actionsPanel;
     private JButton openButton;
     private JCheckBox box3;
     private JCheckBox box4;
@@ -29,7 +28,6 @@ public class CellCountGUI {
     private JLabel nameChange;
     private JButton saveButton;
     private JButton queryButton;
-    private JPanel databasePane;
     private JButton cambiarColorButton;
     private JPanel testPane;
 
@@ -71,10 +69,10 @@ public class CellCountGUI {
                 }
             }
         });
-        queryButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null,"No implementado",
-                    "No implementado", JOptionPane.INFORMATION_MESSAGE);
-        });
+        //queryButton.addActionListener(e -> {
+         //   JOptionPane.showMessageDialog(null,"No implementado",
+         //           "No implementado", JOptionPane.INFORMATION_MESSAGE);
+        //});
         saveButton.addActionListener(e -> {
             JOptionPane.showMessageDialog(null,"No implementado",
                     "No implementado", JOptionPane.INFORMATION_MESSAGE);
