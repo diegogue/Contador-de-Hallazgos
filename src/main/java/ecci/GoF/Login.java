@@ -78,17 +78,17 @@ public class Login extends Application {
         skipLogin.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                CellCountGUI.main(null);
+                InicioGUI.main(null);
             }
         });
 
         final PasswordField passwordTxt = new PasswordField();
         final Label message = new Label("   ");
 
-//        Image okImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/src/images/ok2.png"));
-//        Image microscopioImage = new Image(new FileInputStream("/Users/jct/Desktop/Contador-de-Hallazgos/src/images/mc.jpg"));
+        Image okImage = new Image(new FileInputStream("C:\\Users\\Diego\\IdeaProjects\\Contador-de-Hallazgos\\src\\images\\ok2.png"));
+        Image microscopioImage = new Image(new FileInputStream("C:\\Users\\Diego\\IdeaProjects\\Contador-de-Hallazgos\\src\\images\\mc.jpg"));
         Button enter = new Button();
- //       enter.setGraphic(new ImageView(okImage));
+        enter.setGraphic(new ImageView(okImage));
         enter.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -115,8 +115,8 @@ public class Login extends Application {
         });
 
         BackgroundSize backgroundSize = new BackgroundSize(800, 800, true, true, true, false);
-      //  BackgroundImage backgroundImage = new BackgroundImage(microscopioImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-      //  Background background = new Background(backgroundImage);
+        BackgroundImage backgroundImage = new BackgroundImage(microscopioImage, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
 
 
         hbUser.getChildren().addAll(username, userTxt);
@@ -124,7 +124,7 @@ public class Login extends Application {
         hbAutMessage.getChildren().addAll(message);
         hbSaltarLogin.getChildren().addAll(tabs, skipLogin);
 
-      //  vb.setBackground(background);
+        vb.setBackground(background);
         vb.setAlignment(Pos.BASELINE_CENTER);
 
         vb.getChildren().addAll(hbUser, hbPassword, hbAutMessage, hbSaltarLogin);
