@@ -1,8 +1,6 @@
 package ecci.GoF;
 
 import javafx.application.Application;
-import javafx.event.*;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -13,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -22,10 +19,7 @@ import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.event.EventHandler;
-import sun.font.FontFamily;
 
-import javax.swing.text.StyledEditorKit;
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -79,6 +73,7 @@ public class Login extends Application {
             @Override
             public void handle(MouseEvent event) {
                 InicioGUI.main(null);
+                stage.hide();
             }
         });
 
@@ -134,7 +129,6 @@ public class Login extends Application {
 
         Scene scene = new Scene(root, 440, 500);
         scene.setFill(Paint.valueOf("white"));
-
 
         stage.setTitle("Login");
         stage.setScene(scene);

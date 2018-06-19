@@ -12,6 +12,7 @@ public class InicioGUI {
     private JButton BotonNuevoConteo;
     private JButton BotonConsulta;
     private JPanel Panel;
+    private static JFrame frame;
 
     /**
      * Constructor
@@ -22,6 +23,7 @@ public class InicioGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CellCountGUI.main(null);
+                frame.setVisible(false);
             }
         });
         BotonConsulta.addActionListener(new ActionListener() {
@@ -36,7 +38,7 @@ public class InicioGUI {
      * Método principal
      */
     public static void main(String[] args) {
-        JFrame frame = new JFrame("CHIM");
+        frame = new JFrame("CHIM");
         frame.setContentPane(new InicioGUI().Panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
