@@ -8,6 +8,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Interfaz principal del programa contador de celulas.
@@ -40,6 +43,16 @@ public class CellCountGUI {
     private CellCountImageData data;
 
     private static JFrame frame;
+
+    /*Variables para las ventanas de agregación*/
+    private JFrame frame1;
+    private JPanel pane;
+    private JTextField campoUsuario;
+    private JTextField campoProyecto;
+    private JTextField campoDescripcion;
+    private String usuario = "";
+    private String nombreProyecto = "";
+    private String descripcion = "";
 
     /**
      * Constructor de CellCountGUI.
@@ -79,6 +92,7 @@ public class CellCountGUI {
         saveButton.addActionListener(e -> {
             //JOptionPane.showMessageDialog(null,"No implementado",
               //      "No implementado", JOptionPane.INFORMATION_MESSAGE);
+            agregar();
         });
         box0.addActionListener(e -> selectLabel(0));
         box1.addActionListener(e -> selectLabel(1));
@@ -123,7 +137,7 @@ public class CellCountGUI {
             if (newHeight < 500) {
                 newHeight = 500;
             }
-            frame.setSize(imageWidth + 200, newHeight);
+            frame.setSize(imageWidth + 250, newHeight);
             testPane.removeAll();
             testPane.add(imageCanvas);
         }
@@ -164,4 +178,58 @@ public class CellCountGUI {
         selectedLabel.setText(count.toString());
     }
 
+    public void agregar() {
+        pane = new JPanel();
+        pane.setLayout(new GridLayout(0, 2, 2, 2));
+
+        campoUsuario = new JTextField(5);
+        campoProyecto = new JTextField(5);
+        campoDescripcion = new JTextField(10);
+
+        pane.add(new JLabel("Ingrese los datos del conteo"));
+        pane.add(new JLabel(""));
+        pane.add(new JLabel(""));
+        pane.add(new JLabel(""));
+        pane.add(new JLabel("Nombre de Usuario"));
+        pane.add(campoUsuario);
+
+        pane.add(new JLabel("Nombre del Proyecto"));
+        pane.add(campoProyecto);
+
+        pane.add(new JLabel("Descripción del Conteo"));
+        pane.add(campoDescripcion);
+
+        Object[] options = {"Agregar",
+                "Cancelar"};
+
+        int option = JOptionPane.showOptionDialog(frame1, pane, "Guardar Conteo", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,null, options, options[0]);
+
+        if (option == JOptionPane.YES_OPTION) {
+
+            usuario = campoUsuario.getText();
+            nombreProyecto = campoProyecto.getText();
+            descripcion = campoDescripcion.getText();
+
+            pane = new JPanel();
+            pane.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
+
+            pane.add(new JLabel("Usuario:  " + usuario));
+            pane.add(new JLabel("Proyecto:  " + nombreProyecto));
+            pane.add(new JLabel("Descripción:  " + descripcion));
+
+            Date date = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+            JOptionPane.showMessageDialog(pane,
+
+                    "El conteo se ha guardado correctamente \n\n" +
+                            "    Nombre del Proyecto:  " + nombreProyecto +
+                            "\n    Fecha y Hora:                 " + dateFormat.format(date) +
+                            "\n    Usuario:                           " + usuario  +
+                            "\n    Descripción:                   " +
+                            descripcion + "\n          Hallazgos:" + "\n"
+                            + "             Figura1:" + "         " + "10" + "\n" + "             Figura2:" + "         " + "10"
+                            + "\n             Figura3:" + "         " + "10" , "Conteo Guardado", JOptionPane.PLAIN_MESSAGE, null);
+        }
+    }
 }
