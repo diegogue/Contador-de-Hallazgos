@@ -1,7 +1,6 @@
 package ecci.GoF;
 
 import ij.ImagePlus;
-import ij.gui.Wand;
 import ij.plugin.ContrastEnhancer;
 import ij.plugin.filter.BackgroundSubtracter;
 import ij.plugin.filter.GaussianBlur;
@@ -113,6 +112,11 @@ public class CellCountImageData {
         ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
         blobArray.get(blobArray.size() - 1).setImage(byteImage);
         blobArray.get(blobArray.size() - 1).setBackgroundReference(p);
+    }
+
+    public void setTolerance(int t) {
+        ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
+        blobArray.get(blobArray.size() - 1).setTolerance(t);
     }
 
     public void setColor(Color color) {

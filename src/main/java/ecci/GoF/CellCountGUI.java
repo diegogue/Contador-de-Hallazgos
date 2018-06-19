@@ -4,6 +4,8 @@ import ij.ImagePlus;
 import ij.io.Opener;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -30,6 +32,7 @@ public class CellCountGUI {
     private JButton queryButton;
     private JButton cambiarColorButton;
     private JPanel testPane;
+    private JSlider slider1;
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
@@ -85,6 +88,7 @@ public class CellCountGUI {
         selectedLabel = type0;
         selectedBox = box0;
         data = new CellCountImageData();
+        slider1.addChangeListener(e -> data.setTolerance(slider1.getValue()));
     }
 
     /**

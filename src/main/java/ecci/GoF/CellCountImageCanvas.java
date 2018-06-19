@@ -93,10 +93,12 @@ public class CellCountImageCanvas extends ImageCanvas {
             newWand.autoOutline(mousePoint.x, mousePoint.y);
             data.addBlob(mousePoint);
         } else if (button == MouseEvent.BUTTON3) {
+            /*
             int arraySize = points.size();
             if (arraySize > 0) {
                 points.remove(arraySize - 1);
             }
+            */
             repaint();
             data.setBlobReference(event.getPoint());
         }
