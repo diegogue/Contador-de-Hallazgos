@@ -15,6 +15,8 @@ public class CellCountImageData {
     private ArrayList<ArrayList<BlobDetector>> blobs;
     private int typeIndex;
     private ByteProcessor byteImage;
+    private Point refPixel = new Point(0, 0);
+    private int tolerance = 100;
 
     public CellCountImageData() {
         init();
@@ -59,7 +61,11 @@ public class CellCountImageData {
 
     public void addBlob(Point startPoint) {
         ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
+        blobArray.get(blobArray.size() - 1).setImage(byteImage);
+        blobArray.get(blobArray.size() - 1).setBackgroundReference(refPixel);
+        blobArray.get(blobArray.size() - 1).setTolerance(tolerance);
         blobArray.get(blobArray.size() - 1).computeBlob(startPoint);
+
         BlobDetector newBlob = new BlobDetector(100);
         blobArray.add(newBlob);
     }
@@ -79,6 +85,8 @@ public class CellCountImageData {
 
         ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
         blobArray.get(blobArray.size() - 1).setImage(byteImage);
+        blobArray.get(blobArray.size() - 1).setBackgroundReference(refPixel);
+        blobArray.get(blobArray.size() - 1).setTolerance(tolerance);
 
         /* Debug image */
         //(new ImagePlus("8-bit wonder", byteImage)).show();
@@ -109,12 +117,14 @@ public class CellCountImageData {
     }
 
     public void setBlobReference(Point p) {
+        refPixel = p;
         ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
         blobArray.get(blobArray.size() - 1).setImage(byteImage);
         blobArray.get(blobArray.size() - 1).setBackgroundReference(p);
     }
 
     public void setTolerance(int t) {
+        tolerance = t;
         ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
         blobArray.get(blobArray.size() - 1).setTolerance(t);
     }
