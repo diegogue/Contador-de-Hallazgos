@@ -9,12 +9,36 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import javax.swing.JComboBox;
+
 /**
  * Clase auxiliar para el uso de ImageCanvas con metodos modificados
  */
 public class CellCountImageCanvas extends ImageCanvas {
     private CellCountImageData data;
     private CellCountGUI observer;
+
+    /*Variables para las ventanas de agregación*/
+    private JFrame frame;
+    private JPanel pane;
+    private JTextField campoUsuario;
+    private JTextField campoProyecto;
+    private JTextField campoDescripcion;
+    private String usuario = "";
+    private String nombreProyecto = "";
+    private String descripcion = "";
 
     /**
      * Constructor de CustomCanvas
@@ -104,5 +128,60 @@ public class CellCountImageCanvas extends ImageCanvas {
         }
         repaint();
         notifyObserver();
+    }
+
+    public void agregar() {
+        pane = new JPanel();
+        pane.setLayout(new GridLayout(0, 2, 2, 2));
+
+        campoUsuario = new JTextField(5);
+        campoProyecto = new JTextField(5);
+        campoDescripcion = new JTextField(10);
+
+        pane.add(new JLabel("Ingrese los datos del conteo"));
+        pane.add(new JLabel(""));
+        pane.add(new JLabel(""));
+        pane.add(new JLabel(""));
+        pane.add(new JLabel("Nombre de Usuario"));
+        pane.add(campoUsuario);
+
+        pane.add(new JLabel("Nombre del Proyecto"));
+        pane.add(campoProyecto);
+
+        pane.add(new JLabel("Descripción del Conteo"));
+        pane.add(campoDescripcion);
+
+        Object[] options = {"Agregar",
+                "Cancelar"};
+
+        int option = JOptionPane.showOptionDialog(frame, pane, "Guardar Conteo", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,null, options, options[0]);
+
+        if (option == JOptionPane.YES_OPTION) {
+
+            usuario = campoUsuario.getText();
+            nombreProyecto = campoProyecto.getText();
+            descripcion = campoDescripcion.getText();
+
+            pane = new JPanel();
+            pane.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
+
+            pane.add(new JLabel("Usuario:  " + usuario));
+            pane.add(new JLabel("Proyecto:  " + nombreProyecto));
+            pane.add(new JLabel("Descripción:  " + descripcion));
+
+            Date date = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+            JOptionPane.showMessageDialog(pane,
+
+                    "El conteo se ha guardado correctamente \n\n" +
+                            "    Nombre del Proyecto:  " + nombreProyecto +
+                            "\n    Fecha y Hora:                 " + dateFormat.format(date) +
+                            "\n    Usuario:                           " + usuario  +
+                            "\n    Descripción:                   " +
+                            descripcion + "\n          Hallazgos:" + "\n"
+                            + "             Figura1:" + "         " + "10" + "\n" + "             Figura2:" + "         " + "10"
+                            + "\n             Figura3:" + "         " + "10" , "Conteo Guardado", JOptionPane.PLAIN_MESSAGE, null);
+        }
     }
 }

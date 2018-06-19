@@ -77,8 +77,8 @@ public class CellCountGUI {
          //           "No implementado", JOptionPane.INFORMATION_MESSAGE);
         //});
         saveButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null,"No implementado",
-                    "No implementado", JOptionPane.INFORMATION_MESSAGE);
+            //JOptionPane.showMessageDialog(null,"No implementado",
+              //      "No implementado", JOptionPane.INFORMATION_MESSAGE);
         });
         box0.addActionListener(e -> selectLabel(0));
         box1.addActionListener(e -> selectLabel(1));
