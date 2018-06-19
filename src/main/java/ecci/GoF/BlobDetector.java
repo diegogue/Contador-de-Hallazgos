@@ -40,9 +40,6 @@ public class BlobDetector {
     }
 
     public void computeBlob(Point startingPoint) {
-        pointsSet.clear();
-        pointsQueue.clear();
-        boundarySet.clear();
         pointsSet.add(startingPoint);
         pointsQueue.add(startingPoint);
 
@@ -59,6 +56,9 @@ public class BlobDetector {
             addPoint(south);
         }
         setPoints();
+        pointsSet.clear();
+        pointsQueue.clear();
+        boundarySet.clear();
     }
 
     private void addPoint(Point direction) {

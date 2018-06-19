@@ -13,19 +13,18 @@ import java.util.ArrayList;
 public class CellCountImageData {
     private ArrayList<ArrayList<Point>> points;
     private ArrayList<Color> colors;
-    private ArrayList<ArrayList<Wand>> wands;
+    private ArrayList<ArrayList<BlobDetector>> blobs;
     private int typeIndex;
-    private BlobDetector blob;
+    private ByteProcessor byteImage;
 
     public CellCountImageData() {
         init();
-        blob = null;
     }
 
     public void init() {
         initializePoints();
         initializeColors();
-        initializeWands();
+        initializeBlobs();
     }
 
     /**
@@ -51,20 +50,24 @@ public class CellCountImageData {
         colors.add(Color.RED);
     }
 
-    private void initializeWands() {
-        wands = new ArrayList<>();
+    private void initializeBlobs() {
+        blobs = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
-            wands.add(new ArrayList<>());
+            blobs.add(new ArrayList<>());
+            blobs.get(i).add(new BlobDetector(100));
         }
     }
 
     public void addBlob(Point startPoint) {
-        blob.computeBlob(startPoint);
+        ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
+        blobArray.get(blobArray.size() - 1).computeBlob(startPoint);
+        BlobDetector newBlob = new BlobDetector(100);
+        blobArray.add(newBlob);
     }
 
     public void setImage(ImagePlus image) {
         ImagePlus imp = image.duplicate();
-        ByteProcessor byteImage = (ByteProcessor) imp.getProcessor().convertToByte(true);
+        byteImage = (ByteProcessor) imp.getProcessor().convertToByte(true);
 
         BackgroundSubtracter subtracter = new BackgroundSubtracter();
         subtracter.run(byteImage);
@@ -75,8 +78,9 @@ public class CellCountImageData {
         GaussianBlur blur = new GaussianBlur();
         blur.blurGaussian(byteImage, 32, 32, 8);
 
-        blob = new BlobDetector(90);
-        blob.setImage(byteImage);
+        ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
+        blobArray.get(blobArray.size() - 1).setImage(byteImage);
+
         /* Debug image */
         //(new ImagePlus("8-bit wonder", byteImage)).show();
     }
@@ -101,19 +105,17 @@ public class CellCountImageData {
         typeIndex = n;
     }
 
-    public ArrayList<Wand> getSelectedWands() {
-        return wands.get(typeIndex);
+    public ArrayList<ArrayList<BlobDetector>> getBlobs() {
+        return blobs;
     }
 
-    public BlobDetector getBlob() {
-        return blob;
+    public void setBlobReference(Point p) {
+        ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
+        blobArray.get(blobArray.size() - 1).setImage(byteImage);
+        blobArray.get(blobArray.size() - 1).setBackgroundReference(p);
     }
 
     public void setColor(Color color) {
         colors.set(typeIndex, color);
-    }
-
-    public ArrayList<ArrayList<Wand>> getWands() {
-        return wands;
     }
 }

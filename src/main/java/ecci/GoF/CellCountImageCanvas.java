@@ -53,23 +53,21 @@ public class CellCountImageCanvas extends ImageCanvas {
         Integer i = 0;
         for (ArrayList<Point> pointArray : data.getPoints()) {
             g.setColor(data.getColors().get(i));
-            ArrayList<Wand> wandArray = data.getWands().get(i);
+            ArrayList<BlobDetector> blobArray = data.getBlobs().get(i);
             Integer j = 0;
             for (Point point : pointArray) {
                 g.fillOval(point.x  - 2, point.y - 2, 4, 4);
-                Wand wand = wandArray.get(j);
-                g.drawPolygon(wand.xpoints, wand.ypoints, wand.npoints);
+
                 char[] label = {(char)((int)'1' + i)};
                 g.drawChars(label, 0, 1, point.x - 2, point.y - 2);
+
+                BlobDetector blob = blobArray.get(j);
+                for (int k = 0; k < blob.npoints; ++k) {
+                    g.fillOval(blob.xpoints[k] - 2, blob.ypoints[k] - 2, 4, 4);
+                }
                 ++j;
             }
             ++i;
-        }
-        BlobDetector blob = data.getBlob();
-        if (blob != null) {
-            for (int j = 0; j < blob.npoints; ++j) {
-                g.fillOval(blob.xpoints[j] - 2, blob.ypoints[j] - 2, 4, 4);
-            }
         }
     }
 
@@ -91,20 +89,16 @@ public class CellCountImageCanvas extends ImageCanvas {
         if (button == MouseEvent.BUTTON1) {
             Point mousePoint = event.getPoint();
             points.add(mousePoint);
-            //System.out.println(mousePoint);
             Wand newWand = new Wand(imp.getProcessor());
             newWand.autoOutline(mousePoint.x, mousePoint.y);
-            data.getSelectedWands().add(newWand);
             data.addBlob(mousePoint);
         } else if (button == MouseEvent.BUTTON3) {
-            /*
             int arraySize = points.size();
             if (arraySize > 0) {
                 points.remove(arraySize - 1);
             }
             repaint();
-            */
-            data.getBlob().setBackgroundReference(event.getPoint());
+            data.setBlobReference(event.getPoint());
         }
         repaint();
         notifyObserver();
