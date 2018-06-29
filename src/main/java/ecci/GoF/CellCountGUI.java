@@ -113,8 +113,20 @@ public class CellCountGUI {
         frame = new JFrame("CHIM");
         frame.setContentPane(new CellCountGUI().mainPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(300, 500);
+        frame.setLocationRelativeTo(null);
         frame.pack();
+        try {
+            UIManager.setLookAndFeel(
+                    "com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+            SwingUtilities.updateComponentTreeUI(frame);
+        }
+        catch (Exception  e) {
+            System.err.println("Could not load LookAndFeel");
+        }
         frame.setVisible(true);
+
+
     }
 
     /**
@@ -138,6 +150,7 @@ public class CellCountGUI {
                 newHeight = 500;
             }
             frame.setSize(imageWidth + 250, newHeight);
+            frame.setLocationRelativeTo(null);
             testPane.removeAll();
             testPane.add(imageCanvas);
         }
