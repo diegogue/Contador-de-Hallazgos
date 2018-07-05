@@ -176,23 +176,6 @@
           </component>
         </children>
       </grid>
-      <component id="5c6f1" class="javax.swing.JSlider" binding="slider1" default-binding="true">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <maximum value="150"/>
-          <minimum value="1"/>
-        </properties>
-      </component>
-      <component id="1442d" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Tolerancia"/>
-        </properties>
-      </component>
     </children>
   </grid>
   <buttonGroups>

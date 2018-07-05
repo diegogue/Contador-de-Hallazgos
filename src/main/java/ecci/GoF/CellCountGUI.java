@@ -35,7 +35,6 @@ public class CellCountGUI {
     private JButton queryButton;
     private JButton cambiarColorButton;
     private JPanel testPane;
-    private JSlider slider1;
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
@@ -102,7 +101,7 @@ public class CellCountGUI {
         selectedLabel = type0;
         selectedBox = box0;
         data = new CellCountImageData();
-        slider1.addChangeListener(e -> data.setTolerance(slider1.getValue()));
+        //slider1.addChangeListener(e -> data.setTolerance(slider1.getValue()));
     }
 
     /**

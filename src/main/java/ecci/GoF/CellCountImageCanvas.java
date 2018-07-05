@@ -68,18 +68,18 @@ public class CellCountImageCanvas extends ImageCanvas {
         Integer i = 0;
         for (ArrayList<Point> pointArray : data.getPoints()) {
             g.setColor(data.getColors().get(i));
-            ArrayList<BlobDetector> blobArray = data.getBlobs().get(i);
+            //ArrayList<BlobDetector> blobArray = data.getBlobs().get(i);
             Integer j = 0;
             for (Point point : pointArray) {
                 g.fillOval(point.x  - 2, point.y - 2, 4, 4);
 
                 char[] label = {(char)((int)'1' + i)};
                 g.drawChars(label, 0, 1, point.x - 2, point.y - 2);
-
+                /*
                 BlobDetector blob = blobArray.get(j);
                 for (int k = 0; k < blob.npoints; ++k) {
                     g.fillOval(blob.xpoints[k] - 2, blob.ypoints[k] - 2, 4, 4);
-                }
+                }*/
                 ++j;
             }
             ++i;
@@ -104,9 +104,9 @@ public class CellCountImageCanvas extends ImageCanvas {
         if (button == MouseEvent.BUTTON1) {
             Point mousePoint = event.getPoint();
             points.add(mousePoint);
-            Wand newWand = new Wand(imp.getProcessor());
-            newWand.autoOutline(mousePoint.x, mousePoint.y);
-            data.addBlob(mousePoint);
+            //Wand newWand = new Wand(imp.getProcessor());
+            //newWand.autoOutline(mousePoint.x, mousePoint.y);
+          //  data.addBlob(mousePoint);
         } else if (button == MouseEvent.BUTTON3) {
             /*
             int arraySize = points.size();
@@ -115,10 +115,10 @@ public class CellCountImageCanvas extends ImageCanvas {
             }
             */
             repaint();
-            data.setBlobReference(event.getPoint());
+            //data.setBlobReference(event.getPoint());
         }
         repaint();
-        notifyObserver();
+        //notifyObserver();
     }
 
 

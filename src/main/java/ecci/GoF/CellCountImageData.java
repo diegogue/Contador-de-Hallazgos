@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class CellCountImageData {
     private ArrayList<ArrayList<Point>> points;
     private ArrayList<Color> colors;
-    private ArrayList<ArrayList<BlobDetector>> blobs;
+    //private ArrayList<ArrayList<BlobDetector>> blobs;
     private int typeIndex;
     private ByteProcessor byteImage;
     private Point refPixel = new Point(0, 0);
@@ -25,7 +25,7 @@ public class CellCountImageData {
     public void init() {
         initializePoints();
         initializeColors();
-        initializeBlobs();
+        //initializeBlobs();
     }
 
     /**
@@ -51,6 +51,7 @@ public class CellCountImageData {
         colors.add(Color.RED);
     }
 
+    /*
     private void initializeBlobs() {
         blobs = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
@@ -69,6 +70,7 @@ public class CellCountImageData {
         BlobDetector newBlob = new BlobDetector(100);
         blobArray.add(newBlob);
     }
+    */
 
     public void setImage(ImagePlus image) {
         ImagePlus imp = image.duplicate();
@@ -83,10 +85,10 @@ public class CellCountImageData {
         GaussianBlur blur = new GaussianBlur();
         blur.blurGaussian(byteImage, 32, 32, 8);
 
-        ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
-        blobArray.get(blobArray.size() - 1).setImage(byteImage);
-        blobArray.get(blobArray.size() - 1).setBackgroundReference(refPixel);
-        blobArray.get(blobArray.size() - 1).setTolerance(tolerance);
+        //ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
+        //blobArray.get(blobArray.size() - 1).setImage(byteImage);
+        //blobArray.get(blobArray.size() - 1).setBackgroundReference(refPixel);
+        //blobArray.get(blobArray.size() - 1).setTolerance(tolerance);
 
         /* Debug image */
         //(new ImagePlus("8-bit wonder", byteImage)).show();
@@ -111,7 +113,7 @@ public class CellCountImageData {
     public void setType(int n) {
         typeIndex = n;
     }
-
+/*
     public ArrayList<ArrayList<BlobDetector>> getBlobs() {
         return blobs;
     }
@@ -127,7 +129,7 @@ public class CellCountImageData {
         tolerance = t;
         ArrayList<BlobDetector> blobArray = blobs.get(typeIndex);
         blobArray.get(blobArray.size() - 1).setTolerance(t);
-    }
+    }*/
 
     public void setColor(Color color) {
         colors.set(typeIndex, color);
