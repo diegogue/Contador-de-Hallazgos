@@ -102,7 +102,7 @@ public class CellCountGUI {
         selectedLabel = type0;
         selectedBox = box0;
         data = new CellCountImageData();
-        slider1.addChangeListener(e -> data.setTolerance(slider1.getValue()));
+        //slider1.addChangeListener(e -> data.setTolerance(slider1.getValue()));
     }
 
     /**
