@@ -8,22 +8,14 @@ import java.io.File;
 import java.io.IOException;
 
 public class ImagePanel extends JPanel {
+    public ImageData data;
     private BufferedImage image;
+    private int zoom;
 
     public ImagePanel() {
         this.image = null;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(this.image, 0, 0, this);
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        if (image == null) return new Dimension(0, 0);
-        return new Dimension(this.image.getWidth(), this.image.getHeight());
+        this.data = new ImageData();
+        this.zoom = 1;
     }
 
     public void addImage(File imageFile) {
@@ -33,4 +25,21 @@ public class ImagePanel extends JPanel {
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(this.image, 0, 0, this);
+        g.setColor(Color.MAGENTA);
+        for (Point p : data.points) {
+            g.fillOval(p.x - 4, p.y - 4, 8, 8);
+        }
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        if (image == null) return new Dimension(0, 0);
+        return new Dimension(this.image.getWidth(), this.image.getHeight());
+    }
+
 }

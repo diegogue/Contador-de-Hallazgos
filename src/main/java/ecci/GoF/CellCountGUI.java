@@ -80,6 +80,7 @@ public class CellCountGUI {
             if (selectedOption == JFileChooser.APPROVE_OPTION) {
                 imagePanel.addImage(chooser.getSelectedFile());
             }
+            imageScroll.revalidate();
         });
         nameChangeField.addKeyListener(new KeyAdapter() {
             @Override
@@ -118,6 +119,14 @@ public class CellCountGUI {
         selectedLabel = type0;
         selectedBox = box0;
         //slider1.addChangeListener(e -> data.setTolerance(slider1.getValue()));
+        imageScroll.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                imagePanel.data.points.add(e.getPoint());
+                imagePanel.repaint();
+                imageScroll.revalidate();
+            }
+        });
     }
 
     /**
