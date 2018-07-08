@@ -1,7 +1,6 @@
 package ecci.GoF;
 
 import ecci.GoF.CellCountGUI;
-import ecci.GoF.CellCountImageData;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
