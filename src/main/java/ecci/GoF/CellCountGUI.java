@@ -54,6 +54,18 @@ public class CellCountGUI {
     private String nombreProyecto = "";
     private String descripcion = "";
 
+    int conteo0=0;
+    int conteo1=0;
+    int conteo2=0;
+    int conteo3=0;
+    int conteo4=0;
+
+    String f1 = "Forma 1";
+    String f2 = "Forma 2";
+    String f3 = "Forma 3";
+    String f4 = "Forma 4";
+    String f5 = "Forma 5";
+
     /**
      * Constructor de CellCountGUI.
      * Inicializa los atributos y agrega los listeners correspondientes
@@ -72,6 +84,21 @@ public class CellCountGUI {
                 super.keyPressed(e);
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     selectedBox.setText(nameChangeField.getText());
+                    if (selectedBox == box0){
+                        f1 = selectedBox.getText();
+                    }
+                    if (selectedBox == box1){
+                        f2 = selectedBox.getText();
+                    }
+                    if (selectedBox == box2){
+                        f3 = selectedBox.getText();
+                    }
+                    if (selectedBox == box3){
+                        f4 = selectedBox.getText();
+                    }
+                    if (selectedBox == box4){
+                        f5 = selectedBox.getText();
+                    }
                 }
             }
         });
@@ -176,9 +203,32 @@ public class CellCountGUI {
     public void update() {
         Integer count = data.getPointCount();
         selectedLabel.setText(count.toString());
+        //Aumenta contadores para mostrar
+        if (selectedBox == box0){
+            conteo0++;
+            f1 = selectedBox.getText();
+        }
+        if (selectedBox == box1){
+            conteo1++;
+            f2 = selectedBox.getText();
+        }
+        if (selectedBox == box2){
+            conteo2++;
+            f3 = selectedBox.getText();
+        }
+        if (selectedBox == box3){
+            conteo3++;
+            f4 = selectedBox.getText();
+        }
+        if (selectedBox == box4){
+            conteo4++;
+            f5 = selectedBox.getText();
+        }
+
     }
 
     public void agregar() {
+
         pane = new JPanel();
         pane.setLayout(new GridLayout(0, 2, 2, 2));
 
@@ -227,9 +277,12 @@ public class CellCountGUI {
                             "\n    Fecha y Hora:                 " + dateFormat.format(date) +
                             "\n    Usuario:                           " + usuario  +
                             "\n    Descripción:                   " +
-                            descripcion + "\n          Hallazgos:" + "\n"
-                            + "             Figura1:" + "         " + "10" + "\n" + "             Figura2:" + "         " + "10"
-                            + "\n             Figura3:" + "         " + "10" , "Conteo Guardado", JOptionPane.PLAIN_MESSAGE, null);
+                            descripcion + "\n          Hallazgos:"
+                            + "\n             " + f1 + ":" + "         " + conteo0
+                            + "\n             " + f2 + ":" + "         " + conteo1
+                            + "\n             " + f3 + ":" + "         " + conteo2
+                            + "\n             " + f4 + ":" + "         " + conteo3
+                            + "\n             " + f5 + ":" + "         " + conteo4 , "Conteo Guardado", JOptionPane.PLAIN_MESSAGE, null);
         }
     }
 }

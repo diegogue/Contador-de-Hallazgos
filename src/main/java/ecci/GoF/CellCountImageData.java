@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class CellCountImageData {
+
     private ArrayList<ArrayList<Point>> points;
     private ArrayList<Color> colors;
     //private ArrayList<ArrayList<BlobDetector>> blobs;

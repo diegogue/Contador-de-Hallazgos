@@ -10,7 +10,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="CellCount" target="1.8" />
       <module name="Contador-de-Hallazgos" target="1.8" />
     </bytecodeTargetLevel>
   </component>
