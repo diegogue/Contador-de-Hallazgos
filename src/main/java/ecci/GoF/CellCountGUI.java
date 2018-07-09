@@ -35,7 +35,8 @@ public class CellCountGUI {
     private JButton queryButton;
     private JButton cambiarColorButton;
     private JPanel testPane;
-    private JSlider slider1;
+    private JButton editarFormaButton;
+    private JButton agregarFormaButton;
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
