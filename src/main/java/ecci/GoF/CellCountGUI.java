@@ -32,6 +32,8 @@ public class CellCountGUI {
     private JPanel ImagePanelPane;
     private ImagePanel imagePanel;
     private JScrollPane imageScroll;
+    private JPanel counterEdit;
+    private JScrollBar zoomScrollBar;
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
@@ -130,6 +132,11 @@ public class CellCountGUI {
                 imagePanel.repaint();
                 imageScroll.revalidate();
             }
+        });
+        zoomScrollBar.addAdjustmentListener(e -> {
+            imagePanel.setZoomLevel(e.getValue());
+            imagePanel.repaint();
+            imageScroll.revalidate();
         });
     }
 
