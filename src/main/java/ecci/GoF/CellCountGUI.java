@@ -37,6 +37,8 @@ public class CellCountGUI {
     private JPanel testPane;
     private JButton editarFormaButton;
     private JButton agregarFormaButton;
+    private JScrollPane scPane;
+    private JButton cerrarButton;
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
@@ -144,6 +146,10 @@ public class CellCountGUI {
         frame.setContentPane(new CellCountGUI().mainPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
         frame.setVisible(true);
     }
 
@@ -156,6 +162,9 @@ public class CellCountGUI {
         type2.setText("0");
         type3.setText("0");
         type4.setText("0");
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x;
+        int y;
         if (image != null) {
             imageCanvas = new CellCountImageCanvas(image, data);
             imageCanvas.addObserver(this);
@@ -163,13 +172,26 @@ public class CellCountGUI {
             int imageWidth = image.getProcessor().getWidth();
             int imageHeight = image.getProcessor().getHeight();
             /* Numero magico, valor sensible */
-            int newHeight = imageHeight + 80;
+            int newHeight = imageHeight;
             if (newHeight < 500) {
                 newHeight = 500;
             }
+            if (newHeight > (int)dimension.getHeight()) {
+                newHeight = (int)dimension.getHeight()-100;
+            }
+            if (imageWidth > (int)dimension.getWidth()) {
+                imageWidth = (int)dimension.getWidth();
+            }
+
             frame.setSize(imageWidth + 250, newHeight);
             testPane.removeAll();
             testPane.add(imageCanvas);
+
+            x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+            y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+
+
+            frame.setLocation(x, y);
         }
     }
 
