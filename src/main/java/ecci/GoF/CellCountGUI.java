@@ -128,7 +128,7 @@ public class CellCountGUI {
                 int xScroll = imageScroll.getHorizontalScrollBar().getValue();
                 int yScroll = imageScroll.getVerticalScrollBar().getValue();
                 Point imagePoint = new Point(mousePoint.x + xScroll, mousePoint.y + yScroll);
-                imagePanel.data.points.add(imagePoint);
+                imagePanel.addPoint(imagePoint);
                 imagePanel.repaint();
                 imageScroll.revalidate();
             }

@@ -39,13 +39,21 @@ public class ImagePanel extends JPanel {
         this.scaledHeight = (int) (this.image.getHeight() * zoom);
     }
 
+    public void addPoint(Point p) {
+        int scaledX = (int) (p.x / zoom);
+        int scaledY = (int) (p.y / zoom);
+        data.points.add(new Point(scaledX, scaledY));
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(this.image, 0, 0, scaledWidth, scaledHeight, this);
         g.setColor(Color.MAGENTA);
         for (Point p : data.points) {
-            g.fillOval(p.x - 4, p.y - 4, 8, 8);
+            int scaledPointX = (int) ((p.x - 4) * zoom);
+            int scaledPointY = (int) ((p.y - 4) * zoom);
+            g.fillOval(scaledPointX, scaledPointY, 8, 8);
         }
     }
 
