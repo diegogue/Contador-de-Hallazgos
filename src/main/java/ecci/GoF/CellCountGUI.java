@@ -54,12 +54,14 @@ public class CellCountGUI {
     private String nombreProyecto = "";
     private String descripcion = "";
 
+    //Contadores para mostrar al final
     int conteo0=0;
     int conteo1=0;
     int conteo2=0;
     int conteo3=0;
     int conteo4=0;
 
+    //Nombres de las formas para mostrar al final
     String f1 = "Forma 1";
     String f2 = "Forma 2";
     String f3 = "Forma 3";
@@ -278,11 +280,11 @@ public class CellCountGUI {
                             "\n    Usuario:                           " + usuario  +
                             "\n    Descripción:                   " +
                             descripcion + "\n          Hallazgos:"
-                            + "\n             " + f1 + ":" + "         " + conteo0
-                            + "\n             " + f2 + ":" + "         " + conteo1
-                            + "\n             " + f3 + ":" + "         " + conteo2
-                            + "\n             " + f4 + ":" + "         " + conteo3
-                            + "\n             " + f5 + ":" + "         " + conteo4 , "Conteo Guardado", JOptionPane.PLAIN_MESSAGE, null);
+                            + "\n             " + f1 + ":         " + conteo0
+                            + "\n             " + f2 + ":         " + conteo1
+                            + "\n             " + f3 + ":         " + conteo2
+                            + "\n             " + f4 + ":         " + conteo3
+                            + "\n             " + f5 + ":         " + conteo4 , "Conteo Guardado", JOptionPane.PLAIN_MESSAGE, null);
         }
     }
 }
