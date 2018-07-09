@@ -29,11 +29,10 @@ public class CellCountGUI {
     private JLabel type2;
     private JLabel type3;
     private JLabel type4;
-    private JTextField nameChangeField;
-    private JLabel nameChange;
+    //private JTextField nameChangeField;
     private JButton saveButton;
     private JButton queryButton;
-    private JButton cambiarColorButton;
+    //private JButton cambiarColorButton;
     private JPanel testPane;
     private JButton editarFormaButton;
     private JButton agregarFormaButton;
@@ -71,6 +70,8 @@ public class CellCountGUI {
     String f4 = "Forma 4";
     String f5 = "Forma 5";
 
+
+
     /**
      * Constructor de CellCountGUI.
      * Inicializa los atributos y agrega los listeners correspondientes
@@ -83,7 +84,7 @@ public class CellCountGUI {
             data.init();
             data.setImage(image);
         });
-        nameChangeField.addKeyListener(new KeyAdapter() {
+       /* nameChangeField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
@@ -106,8 +107,8 @@ public class CellCountGUI {
                     }
                 }
             }
-        });
-        cambiarColorButton.addActionListener(e -> {
+        });*/
+       /* cambiarColorButton.addActionListener(e -> {
             Color newColor = JColorChooser.showDialog(null, "", Color.WHITE);
             if (newColor != null) {
                 data.setColor(newColor);
@@ -116,7 +117,7 @@ public class CellCountGUI {
                     imageCanvas.repaint();
                 }
             }
-        });
+        });*/
         //queryButton.addActionListener(e -> {
          //   JOptionPane.showMessageDialog(null,"No implementado",
          //           "No implementado", JOptionPane.INFORMATION_MESSAGE);
@@ -135,6 +136,18 @@ public class CellCountGUI {
         selectedBox = box0;
         data = new CellCountImageData();
         //slider1.addChangeListener(e -> data.setTolerance(slider1.getValue()));
+        editarFormaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EditWindow.openEdit(data, selectedBox, imageCanvas);
+            }
+        });
+        cerrarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
     }
 
     /**
