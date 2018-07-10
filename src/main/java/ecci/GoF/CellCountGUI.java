@@ -1,11 +1,10 @@
 package ecci.GoF;
 
 import ij.ImagePlus;
+import ij.gui.ImageCanvas;
 import ij.io.Opener;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
@@ -18,6 +17,7 @@ import java.util.Date;
 public class CellCountGUI {
     private JPanel mainPanel;
     private JPanel counterPanel;
+    private ImageCanvas imageCounter;
     private JButton openButton;
     private JCheckBox box3;
     private JCheckBox box4;
@@ -36,6 +36,11 @@ public class CellCountGUI {
     private JButton cambiarColorButton;
     private JPanel testPane;
     private JSlider slider1;
+    private JPanel icPanel4;
+    private JPanel icPanel0;
+    private JPanel icPanel1;
+    private JPanel icPanel2;
+    private JPanel icPanel3;
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
@@ -130,6 +135,7 @@ public class CellCountGUI {
         selectedBox = box0;
         data = new CellCountImageData();
         //slider1.addChangeListener(e -> data.setTolerance(slider1.getValue()));
+        //counterPanel.addAncestorListener(imageCanvas.getObserver());
     }
 
     /**
@@ -196,6 +202,10 @@ public class CellCountGUI {
                 selectedLabel = type4;
                 selectedBox = box4;
                 break;
+            case 55:
+                selectedLabel = type4;
+                selectedBox = box4;
+                break;
         }
         data.setType(n);
     }
@@ -224,6 +234,37 @@ public class CellCountGUI {
             conteo4++;
             f5 = selectedBox.getText();
         }
+
+    }
+
+    public void setImageCounter(ImagePlus imagePlus){
+        imageCounter = new ImageCanvas(imagePlus);
+        if (selectedBox == box0){
+            icPanel0.removeAll();
+            icPanel0.setLayout(new BoxLayout(icPanel0, BoxLayout.PAGE_AXIS));
+            icPanel0.add(imageCounter);
+        }
+        if (selectedBox == box1){
+            icPanel1.removeAll();
+            icPanel1.setLayout(new BoxLayout(icPanel1, BoxLayout.PAGE_AXIS));
+            icPanel1.add(imageCounter);
+        }
+        if (selectedBox == box2){
+            icPanel2.removeAll();
+            icPanel2.setLayout(new BoxLayout(icPanel2, BoxLayout.PAGE_AXIS));
+            icPanel2.add(imageCounter);
+        }
+        if (selectedBox == box3){
+            icPanel3.removeAll();
+            icPanel3.setLayout(new BoxLayout(icPanel3, BoxLayout.PAGE_AXIS));
+            icPanel3.add(imageCounter);
+        }
+        if (selectedBox == box4){
+            icPanel4.removeAll();
+            icPanel4.setLayout(new BoxLayout(icPanel4, BoxLayout.PAGE_AXIS));
+            icPanel4.add(imageCounter);
+        }
+
 
     }
 
