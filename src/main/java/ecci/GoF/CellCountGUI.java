@@ -72,12 +72,12 @@ public class CellCountGUI {
         chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Imagenes (.jpg, .gif)",
-                "jpg", "gif"
+                "jpg", "jpeg", "gif"
         );
         chooser.setFileFilter(filter);
 
         openButton.addActionListener(e -> {
-            int selectedOption = chooser.showOpenDialog(null);
+            int selectedOption = chooser.showOpenDialog(openButton);
             if (selectedOption == JFileChooser.APPROVE_OPTION) {
                 imageScrollPane.setImage(chooser.getSelectedFile());
             }
@@ -117,13 +117,6 @@ public class CellCountGUI {
         selectedLabel = type0;
         selectedBox = box0;
         zoomScrollBar.addAdjustmentListener(e -> imageScrollPane.setZoomLevel(e.getValue()));
-        imageScrollPane.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-                imageScrollPane.addPoint(e.getPoint());
-            }
-        });
     }
 
     /**
