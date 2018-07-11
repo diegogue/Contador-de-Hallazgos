@@ -19,24 +19,10 @@
         <properties/>
         <border type="none"/>
         <children>
-          <scrollpane id="2d507" binding="imageScroll" custom-create="true">
+          <component id="aa726" class="ecci.GoF.ImageScrollPane" binding="imageScrollPane">
             <constraints border-constraint="Center"/>
-            <properties>
-              <doubleBuffered value="true"/>
-              <enabled value="true"/>
-              <verifyInputWhenFocusTarget value="false"/>
-            </properties>
-            <clientProperties>
-              <html.disable class="java.lang.Boolean" value="false"/>
-            </clientProperties>
-            <border type="none"/>
-            <children>
-              <component id="f275b" class="ecci.GoF.ImagePanel" binding="imagePanel">
-                <constraints/>
-                <properties/>
-              </component>
-            </children>
-          </scrollpane>
+            <properties/>
+          </component>
         </children>
       </grid>
       <grid id="be03a" binding="counterEdit" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

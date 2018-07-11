@@ -30,10 +30,9 @@ public class CellCountGUI {
     private JButton saveButton;
     private JButton cambiarColorButton;
     private JPanel ImagePanelPane;
-    private ImagePanel imagePanel;
-    private JScrollPane imageScroll;
     private JPanel counterEdit;
     private JScrollBar zoomScrollBar;
+    private ImageScrollPane imageScrollPane;
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
@@ -80,9 +79,8 @@ public class CellCountGUI {
         openButton.addActionListener(e -> {
             int selectedOption = chooser.showOpenDialog(null);
             if (selectedOption == JFileChooser.APPROVE_OPTION) {
-                imagePanel.addImage(chooser.getSelectedFile());
+                imageScrollPane.setImage(chooser.getSelectedFile());
             }
-            imageScroll.revalidate();
         });
         nameChangeField.addKeyListener(new KeyAdapter() {
             @Override
@@ -110,9 +108,7 @@ public class CellCountGUI {
         });
         cambiarColorButton.addActionListener(e -> {
         });
-        saveButton.addActionListener(e -> {
-            agregar();
-        });
+        saveButton.addActionListener(e -> agregar());
         box0.addActionListener(e -> selectLabel(0));
         box1.addActionListener(e -> selectLabel(1));
         box2.addActionListener(e -> selectLabel(2));
@@ -120,23 +116,13 @@ public class CellCountGUI {
         box4.addActionListener(e -> selectLabel(4));
         selectedLabel = type0;
         selectedBox = box0;
-        //slider1.addChangeListener(e -> data.setTolerance(slider1.getValue()));
-        imageScroll.addMouseListener(new MouseAdapter() {
+        zoomScrollBar.addAdjustmentListener(e -> imageScrollPane.setZoomLevel(e.getValue()));
+        imageScrollPane.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Point mousePoint = e.getPoint();
-                int xScroll = imageScroll.getHorizontalScrollBar().getValue();
-                int yScroll = imageScroll.getVerticalScrollBar().getValue();
-                Point imagePoint = new Point(mousePoint.x + xScroll, mousePoint.y + yScroll);
-                imagePanel.addPoint(imagePoint);
-                imagePanel.repaint();
-                imageScroll.revalidate();
+                super.mousePressed(e);
+                imageScrollPane.addPoint(e.getPoint());
             }
-        });
-        zoomScrollBar.addAdjustmentListener(e -> {
-            imagePanel.setZoomLevel(e.getValue());
-            imagePanel.repaint();
-            imageScroll.revalidate();
         });
     }
 
@@ -276,7 +262,4 @@ public class CellCountGUI {
         }
     }
 
-    private void createUIComponents() {
-        imageScroll = new JScrollPane(imagePanel);
-    }
 }

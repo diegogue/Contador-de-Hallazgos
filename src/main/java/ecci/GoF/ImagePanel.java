@@ -8,9 +8,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class ImagePanel extends JPanel {
-    public ImageData data;
+    private ImageData data;
     private BufferedImage image;
-    private BufferedImage scaledImage;
     private float zoom;
     private int scaledWidth;
     private int scaledHeight;
@@ -21,7 +20,7 @@ public class ImagePanel extends JPanel {
         this.zoom = .5f;
     }
 
-    public void addImage(File imageFile) {
+    public void setImage(File imageFile) {
         try {
             this.image = ImageIO.read(imageFile);
         } catch (IOException e) {
@@ -30,6 +29,7 @@ public class ImagePanel extends JPanel {
         }
         this.scaledWidth = (int) (this.image.getWidth() * zoom);
         this.scaledHeight = (int) (this.image.getHeight() * zoom);
+        //this.repaint();
     }
 
     public void setZoomLevel(int zoomLevel) {
@@ -37,12 +37,13 @@ public class ImagePanel extends JPanel {
         this.zoom = zoomLevel / 100f;
         this.scaledWidth = (int) (this.image.getWidth() * zoom);
         this.scaledHeight = (int) (this.image.getHeight() * zoom);
+        //this.repaint();
     }
 
     public void addPoint(Point p) {
         int scaledX = (int) (p.x / zoom);
         int scaledY = (int) (p.y / zoom);
-        data.points.add(new Point(scaledX, scaledY));
+        this.data.points.add(new Point(scaledX, scaledY));
     }
 
     @Override
