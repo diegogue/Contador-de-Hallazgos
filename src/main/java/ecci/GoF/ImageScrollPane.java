@@ -2,6 +2,8 @@ package ecci.GoF;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 public class ImageScrollPane extends JScrollPane {
@@ -11,6 +13,19 @@ public class ImageScrollPane extends JScrollPane {
         super();
         this.imagePane = new ImagePanel();
         setViewportView(this.imagePane);
+        /* NOTE: numero magico */
+        getVerticalScrollBar().setUnitIncrement(20);
+        getHorizontalScrollBar().setUnitIncrement(20);
+        MouseAdapter mouseAdapter = new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                addPoint(e.getPoint());
+            }
+
+        };
+        addMouseListener(mouseAdapter);
+        //addMouseMotionListener(mouseAdapter);
     }
 
     public ImagePanel getImagePane() {
