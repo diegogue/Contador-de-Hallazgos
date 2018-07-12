@@ -2,8 +2,8 @@ package ecci.GoF;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class ImageScrollPane extends JScrollPane {
@@ -13,19 +13,12 @@ public class ImageScrollPane extends JScrollPane {
         super();
         this.imagePane = new ImagePanel();
         setViewportView(this.imagePane);
-        /* NOTE: numero magico */
-        getVerticalScrollBar().setUnitIncrement(20);
-        getHorizontalScrollBar().setUnitIncrement(20);
-        MouseAdapter mouseAdapter = new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-                addPoint(e.getPoint());
-            }
 
-        };
-        addMouseListener(mouseAdapter);
+        InputListener inListener = new InputListener();
+        addMouseListener(inListener);
         //addMouseMotionListener(mouseAdapter);
+        //addKeyListener(inListener);
+        addMouseWheelListener(inListener);
     }
 
     public ImagePanel getImagePane() {
@@ -51,4 +44,40 @@ public class ImageScrollPane extends JScrollPane {
         this.imagePane.addPoint(imagePoint);
         repaint();
     }
+
+    public BufferedImage getSubimage(int x, int y, int width, int height) {
+        int xPoint = x + (width/2) + getHorizontalScrollBar().getValue();
+        int yPoint = y + (height/2) + getVerticalScrollBar().getValue();
+        return this.imagePane.getSubimage(xPoint, yPoint, width, height);
+    }
+
+    private class InputListener implements MouseListener, MouseWheelListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) { }
+        @Override
+        public void mousePressed(MouseEvent e) {
+            Dimension imageDimension = imagePane.getPreferredSize();
+            if (e.getY() < imageDimension.height && e.getX() < imageDimension.width) {
+                addPoint(e.getPoint());
+            }
+        }
+        @Override
+        public void mouseReleased(MouseEvent e) { }
+        @Override
+        public void mouseEntered(MouseEvent e) { }
+        @Override
+        public void mouseExited(MouseEvent e) { }
+
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent e) {
+            if (imagePane == null) return;
+            if (e.isControlDown()) {
+                imagePane.addZoomLevel(-e.getWheelRotation() * 2);
+                revalidate();
+                repaint();
+            }
+        }
+    }
 }
+

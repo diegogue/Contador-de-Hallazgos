@@ -40,10 +40,22 @@ public class ImagePanel extends JPanel {
         //this.repaint();
     }
 
+    public void addZoomLevel(int addZoom) {
+        this.zoom = this.zoom + (addZoom/100f);
+        this.scaledWidth = (int) (this.image.getWidth() * zoom);
+        this.scaledHeight = (int) (this.image.getHeight() * zoom);
+    }
+
     public void addPoint(Point p) {
         int scaledX = (int) (p.x / zoom);
         int scaledY = (int) (p.y / zoom);
         this.data.points.add(new Point(scaledX, scaledY));
+    }
+
+    public BufferedImage getSubimage(int x, int y, int width, int heigth) {
+        int xPoint = (int) (x / zoom);
+        int yPoint = (int) (y / zoom);
+        return image.getSubimage(xPoint, yPoint, width, heigth);
     }
 
     @Override
@@ -56,6 +68,10 @@ public class ImagePanel extends JPanel {
             int scaledPointY = (int) ((p.y - 4) * zoom);
             g.fillOval(scaledPointX, scaledPointY, 8, 8);
         }
+
+        g.setColor(Color.ORANGE);
+        g.drawLine(0, scaledHeight/2, scaledWidth, scaledHeight/2);
+        g.drawLine(scaledWidth/2, 0, scaledWidth/2, scaledHeight);
     }
 
     @Override
@@ -65,3 +81,4 @@ public class ImagePanel extends JPanel {
     }
 
 }
+
