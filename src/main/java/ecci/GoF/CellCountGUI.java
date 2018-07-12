@@ -17,7 +17,7 @@ public class CellCountGUI {
     private JPanel formas;
     private ImageScrollPane imagePane;
     private JScrollPane scrollCount;
-    private Box countersPane;
+    private JPanel countersPane;
 
     private JFileChooser chooser;
 
@@ -39,12 +39,11 @@ public class CellCountGUI {
         );
         chooser.setFileFilter(filter);
         createMenu();
-        countersPane = new Box(BoxLayout.Y_AXIS);
+        countersPane = new JPanel();
+        countersPane.setLayout(new BoxLayout(countersPane, BoxLayout.Y_AXIS));
         cellCountGroup = new ButtonGroup();
         scrollCount.setViewportView(countersPane);
-        addCellCounter();
-        addCellCounter();
-        addCellCounter();
+        counters = new ArrayList<>();
         addCellCounter();
     }
 
