@@ -1,11 +1,9 @@
 package ecci.GoF;
 
-import ij.ImagePlus;
-import ij.gui.ImageCanvas;
-import ij.io.Opener;
-
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,66 +13,30 @@ import java.util.Date;
  */
 public class CellCountGUI {
     private JPanel mainPanel;
-    private JPanel counterPanel;
-    private ImageCanvas imageCounter;
-    private JCheckBox box3;
-    private JCheckBox box4;
-    private JCheckBox box2;
-    private JCheckBox box1;
-    private JCheckBox box0;
-    private JLabel type0;
-    private JLabel type1;
-    private JLabel type2;
-    private JLabel type3;
-    private JLabel type4;
-    private JPanel testPane;
-    private JButton editarFormaButton;
-    private JPanel icPanel0;
-    private JPanel icPanel1;
-    private JPanel icPanel2;
-    private JPanel icPanel3;
-    private JPanel icPanel4;
     private JPanel formas;
-    private JScrollPane scPane;
+    private ImageScrollPane imagePane;
+    private JScrollPane scrollCount;
+    private JPanel countersPane;
 
-    private JLabel selectedLabel;
-    private JCheckBox selectedBox;
-    private CellCountImageCanvas imageCanvas;
-    private CellCountImageData data;
+    private JFileChooser chooser;
 
     private static JFrame frame;
-
-    //Contadores para mostrar al final
-    private int conteo0=0;
-    private int conteo1=0;
-    private int conteo2=0;
-    private int conteo3=0;
-    private int conteo4=0;
-
-    //Nombres de las formas para mostrar al final
-    private String f1 = "Forma 1";
-    private String f2 = "Forma 2";
-    private String f3 = "Forma 3";
-    private String f4 = "Forma 4";
-    private String f5 = "Forma 5";
-
-
 
     /**
      * Constructor de CellCountGUI.
      * Inicializa los atributos y agrega los listeners correspondientes
      */
     public CellCountGUI() {
-        box0.addActionListener(e -> selectLabel(0));
-        box1.addActionListener(e -> selectLabel(1));
-        box2.addActionListener(e -> selectLabel(2));
-        box3.addActionListener(e -> selectLabel(3));
-        box4.addActionListener(e -> selectLabel(4));
-        selectedLabel = type0;
-        selectedBox = box0;
-        data = new CellCountImageData();
-        editarFormaButton.addActionListener(e -> EditWindow.openEdit(data, selectedBox, imageCanvas));
+
+        chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Imagenes (.jpg, .jpeg, .gif, .png)",
+                "jpg", "jpeg", "gif", "png"
+        );
+        chooser.setFileFilter(filter);
         createMenu();
+        addCellCounter();
+        scrollCount.setViewportView(countersPane);
     }
 
     /**
@@ -85,7 +47,8 @@ public class CellCountGUI {
         frame = new JFrame("CHIM");
         frame.setContentPane(new CellCountGUI().mainPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.pack();
+        //frame.pack();
+        frame.setSize(800, 600);
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
@@ -93,76 +56,37 @@ public class CellCountGUI {
         frame.setVisible(true);
     }
 
-    /**
-     * Inicializa el contador y abre la imagen
-     */
-    private void initializeImage(ImagePlus image) {
-        type0.setText("0");
-        type1.setText("0");
-        type2.setText("0");
-        type3.setText("0");
-        type4.setText("0");
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x;
-        int y;
-        if (image != null) {
-            imageCanvas = new CellCountImageCanvas(image, data);
-            imageCanvas.addObserver(this);
-            //new ImageWindow(image, imageCanvas);
-            int imageWidth = image.getProcessor().getWidth();
-            int imageHeight = image.getProcessor().getHeight();
-            /* Numero magico, valor sensible */
-            int newHeight = imageHeight+110;
-            if (newHeight < 500) {
-                newHeight = 500;
-            }
-            if (newHeight > (int)dimension.getHeight()) {
-                newHeight = (int)dimension.getHeight()-100;
-            }
-            if (imageWidth > (int)dimension.getWidth()) {
-                imageWidth = (int)dimension.getWidth();
-            }
-
-            frame.setSize(imageWidth + 210, newHeight);
-            testPane.removeAll();
-            testPane.add(imageCanvas);
-
-            x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
-            y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
-
-
-            frame.setLocation(x, y);
-        }
+    private void addCellCounter() {
+        CellCounter newCount = new CellCounter();
+        countersPane.add(newCount);
     }
 
     /**
-     * Cambia la variable seleect label por type-n
-     * @param n indice de label
+     * Inicializa el contador y abre la imagen
      */
-    private void selectLabel(int n) {
-        switch (n) {
-            case 0:
-                selectedLabel = type0;
-                selectedBox = box0;
-                break;
-            case 1:
-                selectedLabel = type1;
-                selectedBox = box1;
-                break;
-            case 2:
-                selectedLabel = type2;
-                selectedBox = box2;
-                break;
-            case 3:
-                selectedLabel = type3;
-                selectedBox = box3;
-                break;
-            case 4:
-                selectedLabel = type4;
-                selectedBox = box4;
-                break;
+    private void initializeImage() {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        //imageCanvas.addObserver(this);
+        int imageWidth = imagePane.getWidth();
+        int imageHeight = imagePane.getHeight();
+
+        /* Numero magico, valor sensible */
+        int newHeight = imageHeight+110;
+        if (newHeight < 500) {
+            newHeight = 500;
         }
-        data.setType(n);
+        if (newHeight > (int)dimension.getHeight()) {
+            newHeight = (int)dimension.getHeight()-100;
+        }
+        if (imageWidth > (int)dimension.getWidth()) {
+            imageWidth = (int)dimension.getWidth();
+        }
+
+        frame.setSize(imageWidth + 210, newHeight);
+
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
     }
 
     private void createMenu() {
@@ -170,12 +94,11 @@ public class CellCountGUI {
         JMenu file = new JMenu("Archivo");
         JMenuItem open = new JMenuItem("Abrir Imagen");
         open.addActionListener(e -> {
-            Opener opener = new Opener();
-            ImagePlus image = opener.openImage("");
-            initializeImage(image);
-            data.init();
-            data.setImage(image);
-            colorBoxes();
+            int chooseOption = chooser.showOpenDialog(frame);
+            if (chooseOption == JFileChooser.APPROVE_OPTION) {
+                imagePane.setImage(chooser.getSelectedFile());
+                initializeImage();
+            }
         });
         JMenuItem save = new JMenuItem("Guardar");
         save.addActionListener(e -> agregar());
@@ -186,82 +109,13 @@ public class CellCountGUI {
     }
 
     private void colorBoxes(){
-        int i = 0;
-        box0.setBackground(data.getColors().get(i));
-        i++;
-        box1.setBackground(data.getColors().get(i));
-        i++;
-        box2.setBackground(data.getColors().get(i));
-        i++;
-        box3.setBackground(data.getColors().get(i));
-        i++;
-        box4.setBackground(data.getColors().get(i));
-        i++;
     }
 
     public void update() {
-        Integer count = data.getPointCount();
-        selectedLabel.setText(count.toString());
-        //Aumenta contadores para mostrar
-        if (selectedBox == box0){
-            conteo0++;
-            f1 = selectedBox.getText();
-        }
-        if (selectedBox == box1){
-            conteo1++;
-            f2 = selectedBox.getText();
-        }
-        if (selectedBox == box2){
-            conteo2++;
-            f3 = selectedBox.getText();
-        }
-        if (selectedBox == box3){
-            conteo3++;
-            f4 = selectedBox.getText();
-        }
-        if (selectedBox == box4){
-            conteo4++;
-            f5 = selectedBox.getText();
-        }
-
     }
 
-    public void setImageCounter(ImagePlus imagePlus){
-        imageCounter = new ImageCanvas(imagePlus);
-        if (selectedBox == box0){
-            icPanel0.removeAll();
-            icPanel0.setLayout(new BoxLayout(icPanel0, BoxLayout.PAGE_AXIS));
-            icPanel0.add(imageCounter);
-            icPanel0.setSize(imageCounter.getWidth(),imageCounter.getHeight());
-        }
-        if (selectedBox == box1){
-            icPanel1.removeAll();
-            icPanel1.setLayout(new BoxLayout(icPanel1, BoxLayout.PAGE_AXIS));
-            icPanel1.add(imageCounter);
-            icPanel1.setSize(imageCounter.getWidth(),imageCounter.getHeight());
-        }
-        if (selectedBox == box2){
-            icPanel2.removeAll();
-            icPanel2.setLayout(new BoxLayout(icPanel2, BoxLayout.PAGE_AXIS));
-            icPanel2.add(imageCounter);
-            icPanel2.setSize(imageCounter.getWidth(),imageCounter.getHeight());
-        }
-        if (selectedBox == box3){
-            icPanel3.removeAll();
-            icPanel3.setLayout(new BoxLayout(icPanel3, BoxLayout.PAGE_AXIS));
-            icPanel3.add(imageCounter);
-            icPanel3.setSize(imageCounter.getWidth(),imageCounter.getHeight());
-        }
-        if (selectedBox == box4){
-            icPanel4.removeAll();
-            icPanel4.setLayout(new BoxLayout(icPanel4, BoxLayout.PAGE_AXIS));
-            icPanel4.add(imageCounter);
-            icPanel4.setSize(imageCounter.getWidth(),imageCounter.getHeight());
-        }
-
-
+    public void setImageCounter(Image image){
     }
-
 
     public void agregar() {
 
@@ -314,12 +168,26 @@ public class CellCountGUI {
                             "\n    Fecha y Hora:                 " + dateFormat.format(date) +
                             "\n    Usuario:                           " + usuario +
                             "\n    Descripción:                   " +
-                            descripcion + "\n          Hallazgos:"
-                            + "\n             " + f1 + ":         " + conteo0
-                            + "\n             " + f2 + ":         " + conteo1
-                            + "\n             " + f3 + ":         " + conteo2
-                            + "\n             " + f4 + ":         " + conteo3
-                            + "\n             " + f5 + ":         " + conteo4 , "Conteo Guardado", JOptionPane.PLAIN_MESSAGE, null);
+                            descripcion + "\n          Hallazgos:",
+                    "Conteo Guardado", JOptionPane.PLAIN_MESSAGE, null);
+        }
+    }
+
+    private class CellCounter extends JPanel {
+        public JRadioButton radio;
+        public JLabel image;
+        public JLabel textCount;
+
+        public CellCounter() {
+            super(new GridLayout(1, 3));
+            this.radio = new JRadioButton();
+            this.image = new JLabel(new ImageIcon(
+                    new BufferedImage(30, 30, BufferedImage.TYPE_INT_RGB)));
+            this.textCount = new JLabel("0");
+            super.add(radio);
+            super.add(image);
+            super.add(textCount);
+            validate();
         }
     }
 }
