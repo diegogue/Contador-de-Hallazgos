@@ -69,12 +69,9 @@ public class EditWindow {
         frame.setLocation(x, y);
 
         frame.setVisible(true);
-        editW.colorSpace();
+
     }
 
-    public void colorSpace(){
-        colorPane.setBackground(box.getBackground());
-    }
 
 }
 

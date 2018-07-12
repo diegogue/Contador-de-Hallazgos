@@ -83,12 +83,14 @@ public class CellCountGUI {
      * Inicializa los atributos y agrega los listeners correspondientes
      */
     public CellCountGUI() {
+
         openButton.addActionListener(e -> {
             Opener open = new Opener();
             ImagePlus image = open.openImage("");
             initializeImage(image);
             data.init();
             data.setImage(image);
+            colorBoxes();
         });
        /* nameChangeField.addKeyListener(new KeyAdapter() {
             @Override
@@ -191,7 +193,7 @@ public class CellCountGUI {
             int imageWidth = image.getProcessor().getWidth();
             int imageHeight = image.getProcessor().getHeight();
             /* Numero magico, valor sensible */
-            int newHeight = imageHeight;
+            int newHeight = imageHeight+110;
             if (newHeight < 500) {
                 newHeight = 500;
             }
@@ -202,7 +204,7 @@ public class CellCountGUI {
                 imageWidth = (int)dimension.getWidth();
             }
 
-            frame.setSize(imageWidth + 250, newHeight);
+            frame.setSize(imageWidth + 210, newHeight);
             testPane.removeAll();
             testPane.add(imageCanvas);
 
@@ -244,6 +246,20 @@ public class CellCountGUI {
         data.setType(n);
     }
 
+    private void colorBoxes(){
+        int i = 0;
+        box0.setBackground(data.getColors().get(i));
+        i++;
+        box1.setBackground(data.getColors().get(i));
+        i++;
+        box2.setBackground(data.getColors().get(i));
+        i++;
+        box3.setBackground(data.getColors().get(i));
+        i++;
+        box4.setBackground(data.getColors().get(i));
+        i++;
+    }
+
     public void update() {
         Integer count = data.getPointCount();
         selectedLabel.setText(count.toString());
@@ -277,26 +293,31 @@ public class CellCountGUI {
             icPanel0.removeAll();
             icPanel0.setLayout(new BoxLayout(icPanel0, BoxLayout.PAGE_AXIS));
             icPanel0.add(imageCounter);
+            icPanel0.setSize(imageCounter.getWidth(),imageCounter.getHeight());
         }
         if (selectedBox == box1){
             icPanel1.removeAll();
             icPanel1.setLayout(new BoxLayout(icPanel1, BoxLayout.PAGE_AXIS));
             icPanel1.add(imageCounter);
+            icPanel1.setSize(imageCounter.getWidth(),imageCounter.getHeight());
         }
         if (selectedBox == box2){
             icPanel2.removeAll();
             icPanel2.setLayout(new BoxLayout(icPanel2, BoxLayout.PAGE_AXIS));
             icPanel2.add(imageCounter);
+            icPanel2.setSize(imageCounter.getWidth(),imageCounter.getHeight());
         }
         if (selectedBox == box3){
             icPanel3.removeAll();
             icPanel3.setLayout(new BoxLayout(icPanel3, BoxLayout.PAGE_AXIS));
             icPanel3.add(imageCounter);
+            icPanel3.setSize(imageCounter.getWidth(),imageCounter.getHeight());
         }
         if (selectedBox == box4){
             icPanel4.removeAll();
             icPanel4.setLayout(new BoxLayout(icPanel4, BoxLayout.PAGE_AXIS));
             icPanel4.add(imageCounter);
+            icPanel4.setSize(imageCounter.getWidth(),imageCounter.getHeight());
         }
 
 

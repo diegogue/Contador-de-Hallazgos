@@ -4,6 +4,7 @@ import ij.ImagePlus;
 import ij.gui.ImageCanvas;
 import ij.gui.Roi;
 import ij.gui.Wand;
+import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -107,11 +108,20 @@ public class CellCountImageCanvas extends ImageCanvas {
      * Notifica a los observadores sobre un cambio.
      * @param event evento del mouse
      */
+
+    public void keyPressed(KeyEvent event) {
+        String key = event.getCharacter();
+
+    }
+
+
     @Override
     public void mousePressed(MouseEvent event) {
         iX =event.getX();
         iY =event.getY();
     }
+
+
 
     @Override
     public void mouseClicked(MouseEvent event){
@@ -140,7 +150,7 @@ public class CellCountImageCanvas extends ImageCanvas {
 
     @Override
     public void mouseDragged(MouseEvent event){
-        System.out.println("hola");
+        //System.out.println("hola");
         super.mouseDragged(event);
         int x = event.getX();
         int y = event.getY();
