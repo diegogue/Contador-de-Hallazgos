@@ -26,14 +26,7 @@
             </constraints>
             <properties/>
             <border type="none"/>
-            <children>
-              <grid id="31c86" binding="countersPane" layout-manager="GridBagLayout">
-                <constraints/>
-                <properties/>
-                <border type="none"/>
-                <children/>
-              </grid>
-            </children>
+            <children/>
           </scrollpane>
         </children>
       </grid>

@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -16,9 +17,12 @@ public class CellCountGUI {
     private JPanel formas;
     private ImageScrollPane imagePane;
     private JScrollPane scrollCount;
-    private JPanel countersPane;
+    private Box countersPane;
 
     private JFileChooser chooser;
+
+    private ArrayList<CellCounter> counters;
+    private ButtonGroup cellCountGroup;
 
     private static JFrame frame;
 
@@ -35,8 +39,13 @@ public class CellCountGUI {
         );
         chooser.setFileFilter(filter);
         createMenu();
-        addCellCounter();
+        countersPane = new Box(BoxLayout.Y_AXIS);
+        cellCountGroup = new ButtonGroup();
         scrollCount.setViewportView(countersPane);
+        addCellCounter();
+        addCellCounter();
+        addCellCounter();
+        addCellCounter();
     }
 
     /**
@@ -58,7 +67,9 @@ public class CellCountGUI {
 
     private void addCellCounter() {
         CellCounter newCount = new CellCounter();
+        cellCountGroup.add(newCount.radio);
         countersPane.add(newCount);
+        counters.add(newCount);
     }
 
     /**
