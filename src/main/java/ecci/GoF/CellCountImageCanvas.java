@@ -33,7 +33,8 @@ public class CellCountImageCanvas extends ImageCanvas {
     private CellCountGUI observer;
     private int iX;
     private int iY;
-
+    private Color crossColor;
+    private boolean isCrossVisible;
 
     /**
      * Constructor de CustomCanvas
@@ -44,6 +45,8 @@ public class CellCountImageCanvas extends ImageCanvas {
         this.data = data;
         iX = 0;
         iY = 0;
+        this.crossColor = Color.ORANGE;
+        this.isCrossVisible = true;
     }
 
     CellCountImageCanvas(CellCountImageData data) {
@@ -70,6 +73,14 @@ public class CellCountImageCanvas extends ImageCanvas {
         }
     }
 
+    public void setCrossColor(Color c) {
+        crossColor = c;
+    }
+
+    public void setCrossVisible(boolean b) {
+        isCrossVisible = b;
+    }
+
     /**
      * Muestra la imagen y los puntos en pantalla
      * @param g Objecto de manipulacion grafica
@@ -87,9 +98,11 @@ public class CellCountImageCanvas extends ImageCanvas {
             }
             ++i;
         }
-        g.setColor(Color.ORANGE);
-        g.drawLine(0, imp.getHeight()/2, imp.getWidth(), imp.getHeight()/2);
-        g.drawLine(imp.getWidth()/2, 0,imp.getWidth()/2, imp.getHeight());
+        if (isCrossVisible) {
+            g.setColor(crossColor);
+            g.drawLine(0, imp.getHeight() / 2, imp.getWidth(), imp.getHeight() / 2);
+            g.drawLine(imp.getWidth() / 2, 0, imp.getWidth() / 2, imp.getHeight());
+        }
     }
 
     public void setImage(ImagePlus img) {
