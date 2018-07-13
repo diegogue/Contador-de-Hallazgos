@@ -6,7 +6,6 @@ import ij.io.Opener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +16,6 @@ import java.util.Date;
 public class CellCountGUI {
     private JPanel mainPanel;
     private ImageCanvas imageCounter;
-    private JButton openButton;
     private JCheckBox box3;
     private JCheckBox box4;
     private JCheckBox box2;
@@ -28,13 +26,8 @@ public class CellCountGUI {
     private JLabel type2;
     private JLabel type3;
     private JLabel type4;
-    //private JTextField nameChangeField;
-    private JButton saveButton;
-    private JButton queryButton;
-    //private JButton cambiarColorButton;
     private JPanel testPane;
     private JButton editarFormaButton;
-    private JButton cerrarButton;
     private JPanel icPanel0;
     private JPanel icPanel1;
     private JPanel icPanel2;
@@ -44,6 +37,8 @@ public class CellCountGUI {
     private JPanel counterPanel;
     private JScrollPane scPane;
 
+    private ButtonGroup countersGroup;
+
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
     private CellCountImageCanvas imageCanvas;
@@ -51,29 +46,19 @@ public class CellCountGUI {
 
     private static JFrame frame;
 
-    /*Variables para las ventanas de agregación*/
-    private JFrame frame1;
-    private JPanel pane;
-    private JTextField campoUsuario;
-    private JTextField campoProyecto;
-    private JTextField campoDescripcion;
-    private String usuario = "";
-    private String nombreProyecto = "";
-    private String descripcion = "";
-
     //Contadores para mostrar al final
-    int conteo0=0;
-    int conteo1=0;
-    int conteo2=0;
-    int conteo3=0;
-    int conteo4=0;
+    private int conteo0=0;
+    private int conteo1=0;
+    private int conteo2=0;
+    private int conteo3=0;
+    private int conteo4=0;
 
     //Nombres de las formas para mostrar al final
-    String f1 = "Forma 1";
-    String f2 = "Forma 2";
-    String f3 = "Forma 3";
-    String f4 = "Forma 4";
-    String f5 = "Forma 5";
+    private String f1 = "Forma 1";
+    private String f2 = "Forma 2";
+    private String f3 = "Forma 3";
+    private String f4 = "Forma 4";
+    private String f5 = "Forma 5";
 
 
 
@@ -92,6 +77,13 @@ public class CellCountGUI {
         data = new CellCountImageData();
         editarFormaButton.addActionListener(e -> EditWindow.openEdit(data, selectedBox, imageCanvas));
         createMenu();
+
+        countersGroup = new ButtonGroup();
+        countersGroup.add(box0);
+        countersGroup.add(box1);
+        countersGroup.add(box2);
+        countersGroup.add(box3);
+        countersGroup.add(box4);
     }
 
     /**
@@ -123,7 +115,6 @@ public class CellCountGUI {
             ImagePlus image = opener.openImage("");
             initializeImage(image);
             data.init();
-            data.setImage(image);
             colorBoxes();
         });
         JMenuItem save = new JMenuItem("Guardar");
@@ -290,12 +281,12 @@ public class CellCountGUI {
 
     public void agregar() {
 
-        pane = new JPanel();
+        JPanel pane = new JPanel();
         pane.setLayout(new GridLayout(0, 2, 2, 2));
 
-        campoUsuario = new JTextField(5);
-        campoProyecto = new JTextField(5);
-        campoDescripcion = new JTextField(10);
+        JTextField campoUsuario = new JTextField(5);
+        JTextField campoProyecto = new JTextField(5);
+        JTextField campoDescripcion = new JTextField(10);
 
         pane.add(new JLabel("Ingrese los datos del conteo"));
         pane.add(new JLabel(""));
@@ -313,13 +304,13 @@ public class CellCountGUI {
         Object[] options = {"Agregar",
                 "Cancelar"};
 
-        int option = JOptionPane.showOptionDialog(frame1, pane, "Guardar Conteo", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,null, options, options[0]);
+        int option = JOptionPane.showOptionDialog(frame, pane, "Guardar Conteo", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,null, options, options[0]);
 
         if (option == JOptionPane.YES_OPTION) {
 
-            usuario = campoUsuario.getText();
-            nombreProyecto = campoProyecto.getText();
-            descripcion = campoDescripcion.getText();
+            String usuario = campoUsuario.getText();
+            String nombreProyecto = campoProyecto.getText();
+            String descripcion = campoDescripcion.getText();
 
             pane = new JPanel();
             pane.setLayout(new BoxLayout(pane, BoxLayout.PAGE_AXIS));
@@ -336,7 +327,7 @@ public class CellCountGUI {
                     "El conteo se ha guardado correctamente \n\n" +
                             "    Nombre del Proyecto:  " + nombreProyecto +
                             "\n    Fecha y Hora:                 " + dateFormat.format(date) +
-                            "\n    Usuario:                           " + usuario  +
+                            "\n    Usuario:                           " + usuario +
                             "\n    Descripción:                   " +
                             descripcion + "\n          Hallazgos:"
                             + "\n             " + f1 + ":         " + conteo0
