@@ -285,8 +285,7 @@ public class CellCountGUI {
 
     }
 
-
-    public void agregar() {
+    private void agregar() {
 
         JPanel pane = new JPanel();
         pane.setLayout(new GridLayout(0, 2, 2, 2));
