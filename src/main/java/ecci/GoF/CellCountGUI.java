@@ -123,6 +123,14 @@ public class CellCountGUI {
         file.add(open);
         file.add(save);
 
+        JMenu info = new JMenu("Informacion");
+        JMenuItem about = new JMenuItem("Acerca de");
+        about.addActionListener(e -> {
+            JOptionPane.showMessageDialog(frame, "Nice", "Acerca de", JOptionPane.PLAIN_MESSAGE);
+        });
+        info.add(about);
+        menuBar.add(info);
+
         frame.setJMenuBar(menuBar);
     }
 
@@ -149,8 +157,8 @@ public class CellCountGUI {
             if (newHeight < 600) {
                 newHeight = 600;
             }
-            if (imageWidth < 400) {
-                imageWidth = 400;
+            if (imageWidth < 800) {
+                imageWidth = 800;
             }
             if (newHeight > (int)dimension.getHeight()) {
                 newHeight = (int)dimension.getHeight()-100;
@@ -212,7 +220,6 @@ public class CellCountGUI {
         box3.setBackground(data.getColors().get(i));
         i++;
         box4.setBackground(data.getColors().get(i));
-        i++;
     }
 
     public void update() {
