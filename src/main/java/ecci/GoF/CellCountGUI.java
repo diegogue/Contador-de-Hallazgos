@@ -138,10 +138,23 @@ public class CellCountGUI {
         file.add(open);
         file.add(save);
 
-        JMenu info = new JMenu("Informacion");
+        JMenu info = new JMenu("Información");
         JMenuItem about = new JMenuItem("Acerca de");
         about.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Nice", "Acerca de", JOptionPane.PLAIN_MESSAGE);
+            UIManager.put("OptionPane.okButtonText", "Aceptar");
+            JOptionPane.showMessageDialog(frame,
+                        "Contador de hallazgos en fotografías de imágenes microscópicas (CHIM)\n" +
+                                "Versión: 0.3\n" +
+                                "13/07/2018\n\n" +
+                        "Licencia Creative Commons:\n" +
+                                "Atribución\n" +
+                                "CC BY\n\n\n" +
+                                "Desarrolladores:\n\n" +
+                                "              Diego Guevara B02846\n" +
+                                "              Carlos Azofeifa B50761\n" +
+                                "              Sergio Fernández B22539\n" +
+                                "              Allen Ramírez B25448\n" +
+                                "              Jefferson Cose B32135\n\n", "Acerca de", JOptionPane.PLAIN_MESSAGE);
         });
         info.add(about);
         menuBar.add(info);
