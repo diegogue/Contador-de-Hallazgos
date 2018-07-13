@@ -163,7 +163,9 @@ public class CellCountGUI {
      * @param args no utilizado
      */
     public static void main(String[] args) {
+
         frame = new JFrame("CHIM");
+        createMenu();
         frame.setContentPane(new CellCountGUI().mainPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
@@ -171,7 +173,27 @@ public class CellCountGUI {
         int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
         frame.setLocation(x, y);
+
         frame.setVisible(true);
+    }
+
+    private static void createMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("Informacion");
+        /*JMenuItem open = new JMenuItem("Abrir Imagen");
+        open.addActionListener(e -> {
+            int chooseOption = chooser.showOpenDialog(frame);
+            if (chooseOption == JFileChooser.APPROVE_OPTION) {
+                imagePane.setImage(chooser.getSelectedFile());
+                initializeImage();
+            }
+        });
+        JMenuItem save = new JMenuItem("Guardar");
+        save.addActionListener(e -> agregar());
+        file.add(open);
+        file.add(save);*/
+        menuBar.add(file);
+        frame.setJMenuBar(menuBar);
     }
 
     /**
@@ -193,9 +215,12 @@ public class CellCountGUI {
             int imageWidth = image.getProcessor().getWidth();
             int imageHeight = image.getProcessor().getHeight();
             /* Numero magico, valor sensible */
-            int newHeight = imageHeight+110;
-            if (newHeight < 500) {
-                newHeight = 500;
+            int newHeight = imageHeight+160;
+            if (newHeight < 600) {
+                newHeight = 600;
+            }
+            if (imageWidth < 400) {
+                imageWidth = 400;
             }
             if (newHeight > (int)dimension.getHeight()) {
                 newHeight = (int)dimension.getHeight()-100;
@@ -204,7 +229,7 @@ public class CellCountGUI {
                 imageWidth = (int)dimension.getWidth();
             }
 
-            frame.setSize(imageWidth + 210, newHeight);
+            frame.setSize(imageWidth + 260, newHeight);
             testPane.removeAll();
             testPane.add(imageCanvas);
 
