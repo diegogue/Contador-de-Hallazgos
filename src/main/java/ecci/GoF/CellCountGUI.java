@@ -196,7 +196,8 @@ public class CellCountGUI {
             }
 
             frame.setSize(imageWidth + 260, newHeight);
-            //scPane.setViewportView(imageCanvas);
+            //scPane.setViewportView(testPane);
+            testPane.removeAll();
             testPane.add(imageCanvas);
             testPane.setPreferredSize(new Dimension(imageWidth, imageHeight));
 
