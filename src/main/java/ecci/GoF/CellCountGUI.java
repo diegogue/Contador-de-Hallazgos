@@ -5,8 +5,6 @@ import ij.gui.ImageCanvas;
 import ij.io.Opener;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
@@ -18,7 +16,6 @@ import java.util.Date;
  */
 public class CellCountGUI {
     private JPanel mainPanel;
-    private JPanel counterPanel;
     private ImageCanvas imageCounter;
     private JButton openButton;
     private JCheckBox box3;
@@ -37,13 +34,15 @@ public class CellCountGUI {
     //private JButton cambiarColorButton;
     private JPanel testPane;
     private JButton editarFormaButton;
-    private JScrollPane scPane;
     private JButton cerrarButton;
     private JPanel icPanel0;
     private JPanel icPanel1;
     private JPanel icPanel2;
     private JPanel icPanel3;
     private JPanel icPanel4;
+    private JPanel countersPane;
+    private JPanel counterPanel;
+    private JScrollPane scPane;
 
     private JLabel selectedLabel;
     private JCheckBox selectedBox;
@@ -83,58 +82,6 @@ public class CellCountGUI {
      * Inicializa los atributos y agrega los listeners correspondientes
      */
     public CellCountGUI() {
-
-        openButton.addActionListener(e -> {
-            Opener open = new Opener();
-            ImagePlus image = open.openImage("");
-            initializeImage(image);
-            data.init();
-            data.setImage(image);
-            colorBoxes();
-        });
-       /* nameChangeField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    selectedBox.setText(nameChangeField.getText());
-                    if (selectedBox == box0){
-                        f1 = selectedBox.getText();
-                    }
-                    if (selectedBox == box1){
-                        f2 = selectedBox.getText();
-                    }
-                    if (selectedBox == box2){
-                        f3 = selectedBox.getText();
-                    }
-                    if (selectedBox == box3){
-                        f4 = selectedBox.getText();
-                    }
-                    if (selectedBox == box4){
-                        f5 = selectedBox.getText();
-                    }
-                }
-            }
-        });*/
-       /* cambiarColorButton.addActionListener(e -> {
-            Color newColor = JColorChooser.showDialog(null, "", Color.WHITE);
-            if (newColor != null) {
-                data.setColor(newColor);
-                selectedBox.setBackground(newColor);
-                if (imageCanvas != null) {
-                    imageCanvas.repaint();
-                }
-            }
-        });*/
-        //queryButton.addActionListener(e -> {
-         //   JOptionPane.showMessageDialog(null,"No implementado",
-         //           "No implementado", JOptionPane.INFORMATION_MESSAGE);
-        //});
-        saveButton.addActionListener(e -> {
-            //JOptionPane.showMessageDialog(null,"No implementado",
-              //      "No implementado", JOptionPane.INFORMATION_MESSAGE);
-            agregar();
-        });
         box0.addActionListener(e -> selectLabel(0));
         box1.addActionListener(e -> selectLabel(1));
         box2.addActionListener(e -> selectLabel(2));
@@ -143,19 +90,8 @@ public class CellCountGUI {
         selectedLabel = type0;
         selectedBox = box0;
         data = new CellCountImageData();
-        //slider1.addChangeListener(e -> data.setTolerance(slider1.getValue()));
-        editarFormaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                EditWindow.openEdit(data, selectedBox, imageCanvas);
-            }
-        });
-        cerrarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        editarFormaButton.addActionListener(e -> EditWindow.openEdit(data, selectedBox, imageCanvas));
+        createMenu();
     }
 
     /**
@@ -165,7 +101,6 @@ public class CellCountGUI {
     public static void main(String[] args) {
 
         frame = new JFrame("CHIM");
-        createMenu();
         frame.setContentPane(new CellCountGUI().mainPanel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
@@ -177,22 +112,26 @@ public class CellCountGUI {
         frame.setVisible(true);
     }
 
-    private static void createMenu() {
+    private void createMenu() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu file = new JMenu("Informacion");
-        /*JMenuItem open = new JMenuItem("Abrir Imagen");
+
+        JMenu file = new JMenu("Archivo");
+
+        JMenuItem open = new JMenuItem("Abrir Imagen");
         open.addActionListener(e -> {
-            int chooseOption = chooser.showOpenDialog(frame);
-            if (chooseOption == JFileChooser.APPROVE_OPTION) {
-                imagePane.setImage(chooser.getSelectedFile());
-                initializeImage();
-            }
+            Opener opener = new Opener();
+            ImagePlus image = opener.openImage("");
+            initializeImage(image);
+            data.init();
+            data.setImage(image);
+            colorBoxes();
         });
         JMenuItem save = new JMenuItem("Guardar");
         save.addActionListener(e -> agregar());
-        file.add(open);
-        file.add(save);*/
         menuBar.add(file);
+        file.add(open);
+        file.add(save);
+
         frame.setJMenuBar(menuBar);
     }
 
