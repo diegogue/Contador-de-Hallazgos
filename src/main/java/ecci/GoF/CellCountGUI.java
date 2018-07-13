@@ -85,7 +85,7 @@ public class CellCountGUI {
         countersGroup.add(box2);
         countersGroup.add(box3);
         countersGroup.add(box4);
-        scPane.setViewportView(imageCanvas);
+//        scPane.setViewportView(imageCanvas);
         crossColorButton.addActionListener(e -> {
             Color newColor = JColorChooser.showDialog(frame, "Color", Color.ORANGE);
             if (newColor != null && imageCanvas != null) {
@@ -183,7 +183,9 @@ public class CellCountGUI {
             }
 
             frame.setSize(imageWidth + 260, newHeight);
-            scPane.setViewportView(imageCanvas);
+            //scPane.setViewportView(imageCanvas);
+            testPane.add(imageCanvas);
+            testPane.setPreferredSize(new Dimension(imageWidth, imageHeight));
 
             x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
             y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);

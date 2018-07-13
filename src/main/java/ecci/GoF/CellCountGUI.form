@@ -235,7 +235,14 @@
           <requestFocusEnabled value="true"/>
         </properties>
         <border type="none"/>
-        <children/>
+        <children>
+          <grid id="a5579" binding="testPane" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints/>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
       </scrollpane>
     </children>
   </grid>
